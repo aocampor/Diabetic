@@ -1,3 +1,27 @@
+Copyright (c) <2015> <Alberto Ocampo, John Idarraga>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+
+
+##############################################################
 This is a minimal Maven project implementing an ImageJ 1.x plugin
 
 It is intended as an ideal starting point to develop new ImageJ 1.x plugins
@@ -34,32 +58,6 @@ for information how Fiji makes it easier to debug in IDEs.
 Since this project is intended as a starting point for your own
 developments, it is in the public domain.
 
-How to use this project as a starting point
-===========================================
-
-Either
-
-* ```git clone git://github.com/imagej/minimal-ij1-plugin```, or
-* unpack https://github.com/imagej/minimal-ij1-plugin/archive/master.zip
-
-Then:
-
-1. Edit the ```pom.xml``` file. Every entry should be pretty self-explanatory.
-   In particular, change
-    1. the *artifactId* (and optionally also *groupId*)
-    2. the *version* (note that you typically want to use a version number
-       ending in *-SNAPSHOT* to mark it as a work in progress rather than a
-       final version)
-    3. the *dependencies* (read how to specify the correct
-       *groupId/artifactId/version* triplet
-       [here](http://fiji.sc/Maven#How_to_find_a_dependency.27s_groupId.2FartifactId.2Fversion_.28GAV.29.3F))
-    4. the *developer* information
-    5. the *scm* information
-2. Remove the ```Process_Pixels.java``` file and add your own ```.java``` files
-   to ```src/main/java/<package>/``` (if you need supporting files -- like icons
-   -- in the resulting ```.jar``` file, put them into ```src/main/resources/```)
-3. Edit ```src/main/resources/plugins.config```
-4. Replace the contents of ```README.md``` with information about your project.
 
 If you cloned the ```minimal-ij1-plugin``` repository, you probably want to
 publish the result in your own repository:

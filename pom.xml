@@ -7,32 +7,46 @@
 
 	<parent>
 		<groupId>net.imagej</groupId>
-		<artifactId>pom-imagej</artifactId>
-		<version>5.2.5</version>
+		<artifactId>DiabeticRetinopathy</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 
 	<groupId>sc.fiji</groupId>
-	<artifactId>Process_Pixels</artifactId>
+	<artifactId>Diabetic_Retinopathy</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 
-	<name>plugins/Process_Pixels.jar</name>
+	<name>plugins/Diabetic_Retinopathy.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin</description>
 
 	<developers>
 		<developer>
-			<id>dscho</id>
-			<name>Johannes Schindelin</name>
-			<email>johannes.schindelin@gmx.de</email>
-			<url>http://loci.wisc.edu/people/johannes-schindelin</url>
-			<organization>UW-Madison LOCI</organization>
-			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<id>aocampor</id>
+			<name>Alberto Ocampo</name>
+			<email>alocampor@gmail.com</email>
+			<url>http://www.aocampor.com</url>
+			<organization>UGent</organization>
+			<organizationUrl>http://fens.ugent.be/</organizationUrl>
 			<roles>
 				<role>architect</role>
 				<role>developer</role>
 			</roles>
-			<timezone>-6</timezone>
+			<timezone>+2</timezone>
 		</developer>
+		<developer>
+			<id>john</id>
+			<name>John Idarraga</name>
+			<email>john.idarraga@gmail.com</email>
+			<url></url>
+			<organization></organization>
+			<organizationUrl></organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+2</timezone>
+		</developer>
+
 	</developers>
 
 	<scm>
@@ -43,7 +57,7 @@
 	</scm>
 
 	<properties>
-		<main-class>Process_Pixels</main-class>
+		<main-class>Diabetic_Retinopathy</main-class>
 	</properties>
 
 	<dependencies>

@@ -1,11 +1,3 @@
-/*
- * To the extent possible under law, the Fiji developers have waived
- * all copyright and related or neighboring rights to this tutorial code.
- *
- * See the CC0 1.0 Universal license for details:
- *     http://creativecommons.org/publicdomain/zero/1.0/
- */
-
 import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
@@ -14,14 +6,14 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 
 /**
- * ProcessPixels
+ * DiabeticRetinopathy
  *
  * A template for processing each pixel of either
  * GRAY8, GRAY16, GRAY32 or COLOR_RGB images.
  *
  * @author The Fiji Team
  */
-public class Process_Pixels implements PlugInFilter {
+public class Diabetic_Retinopathy implements PlugInFilter {
 	protected ImagePlus image;
 
 	// image property members
@@ -159,7 +151,7 @@ public class Process_Pixels implements PlugInFilter {
 	}
 
 	public void showAbout() {
-		IJ.showMessage("ProcessPixels",
+		IJ.showMessage("DiabeticRetinopathy",
 			"a template for processing each pixel of an image"
 		);
 	}
@@ -174,7 +166,7 @@ public class Process_Pixels implements PlugInFilter {
 	 */
 	public static void main(String[] args) {
 		// set the plugins.dir property to make the plugin appear in the Plugins menu
-		Class<?> clazz = Process_Pixels.class;
+		Class<?> clazz = Diabetic_Retinopathy.class;
 		String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
 		String pluginsDir = url.substring(5, url.length() - clazz.getName().length() - 6);
 		System.setProperty("plugins.dir", pluginsDir);
@@ -183,10 +175,24 @@ public class Process_Pixels implements PlugInFilter {
 		new ImageJ();
 
 		// open the Clown sample
-		ImagePlus image = IJ.openImage("http://imagej.net/images/clown.jpg");
+		ImagePlus image = IJ.openImage("/home/aocampor/DiabeticRetinophaty/sample/16_left.jpeg");
 		image.show();
-
+                
+                ImageProcessor ip = image.getProcessor();
+                int [][] img_matrix  = ip.getIntArray();
+                System.out.println( "size : " + img_matrix.length + "\n");
+                int sizex = img_matrix.length;
+                //int sizey = img_matrix[].length;
+               
+                
+                for ( int i = 1000 ; i < 1010 ; i++) {
+                    int B = img_matrix[2000][i] & 0xFF;
+                    int G = img_matrix[2000][i] >> 8 & 0xFF;
+                    int R = img_matrix[2000][i] >> 16 & 0xFF;
+                    System.out.printf("R:%d,G:%d,B:%d\n", R, G, B );
+                }
+                
 		// run the plugin
-		IJ.runPlugIn(clazz.getName(), "");
+		//IJ.runPlugIn(clazz.getName(), "");
 	}
 }
