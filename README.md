@@ -1,27 +1,4 @@
-Copyright (c) <2015> <Alberto Ocampo, John Idarraga>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-
-
-##############################################################
+################################### Original README
 This is a minimal Maven project implementing an ImageJ 1.x plugin
 
 It is intended as an ideal starting point to develop new ImageJ 1.x plugins
@@ -58,15 +35,3 @@ for information how Fiji makes it easier to debug in IDEs.
 Since this project is intended as a starting point for your own
 developments, it is in the public domain.
 
-
-If you cloned the ```minimal-ij1-plugin``` repository, you probably want to
-publish the result in your own repository:
-
-1. Call ```git status``` to verify .gitignore lists all the files (or file
-   patterns) that should be ignored
-2. Call ```git add .``` and ```git add -u``` to stage the current files for
-   commit
-3. Call ```git commit``` or ```git gui``` to commit the changes
-4. [Create a new GitHub repository](https://github.com/new)
-5. ```git remote set-url origin git@github.com:<username>/<projectname>```
-6. ```git push origin HEAD```
