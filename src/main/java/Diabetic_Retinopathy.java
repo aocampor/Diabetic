@@ -41,7 +41,7 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         System.out.println("Run ...\n");
         String datapath = "/home/idarraga/storage/Diabetic_Retinopathy_Detection/JonnyBeGood/";
         loadCSVFile("/home/idarraga/storage/Diabetic_Retinopathy_Detection/trainLabels.csv");
-        int nImagesProcess = 100;
+        int nImagesProcess = 10;
         boolean closeImageAfterProcessing = true;
 
         //int setSize = ImagesHelperList.size();
@@ -64,7 +64,7 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
                 System.out.printf("-- %d -- ", imageItr );
                 System.out.printf("%s | DRlevel = %d\n", fn, oneImageHelper.getDRLevel());
                 double[] inVector = getIntegralAboveBackground(fn, 100, 2.0, closeImageAfterProcessing);
-
+                        
                 levV[imageItr] = oneImageHelper.getDRLevel();
                 intRV[imageItr] = inVector[0];
                 imageItr++;
@@ -93,7 +93,8 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         // Open
         ImagePlus image = IJ.openImage(fn);
         image.show();
-        
+        // Trying to equalize the image by Enhance Contrast using Equalize histogram
+        IJ.run("Enhance Contrast...", "saturated=0.4 equalize");
         // Perform background substraction
         String bgSubtraction = "rolling=" + backgSubsRolling + "  stack";
         IJ.run("Subtract Background...", bgSubtraction);

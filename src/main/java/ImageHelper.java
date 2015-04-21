@@ -12,6 +12,8 @@ public class ImageHelper {
     
     String fnPrefix;
     int DRlevel;
+    int sizex;
+    int sizey;
     
     // constructor
     public ImageHelper(String fnPre, int DRlev){
@@ -21,5 +23,12 @@ public class ImageHelper {
     
     public String getFilenamePrefix() { return this.fnPrefix; }
     public int getDRLevel() { return this.DRlevel; }
+    public int getSizeX() { return this.sizex; }
+    public int getSizeY() { return this.sizey; }
+    
+    public void setSizeX(int s) { this.sizex = s; }
+    public void setSizeY(int s) { this.sizey = s; }
+    
+    
     
 }
