@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Math.PI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,12 +42,14 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         System.out.println("Run ...\n");
         String datapath = "/home/idarraga/storage/Diabetic_Retinopathy_Detection/JonnyBeGood/";
         loadCSVFile("/home/idarraga/storage/Diabetic_Retinopathy_Detection/trainLabels.csv");
-        int nImagesProcess = 10;
+        int nImagesProcess = 20;
         boolean closeImageAfterProcessing = true;
 
         //int setSize = ImagesHelperList.size();
 
         // prepare R plot
+        double[] areaV = new double[nImagesProcess];
+        double[] effectiveRadiusV = new double[nImagesProcess];
         double[] levV = new double[nImagesProcess];
         double[] intRV = new double[nImagesProcess];
 
@@ -60,18 +63,57 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
             
             File f = new File(fn);
             if (f.exists() && !f.isDirectory()) {
-                
+
+                // Going to work on
                 System.out.printf("-- %d -- ", imageItr );
                 System.out.printf("%s | DRlevel = %d\n", fn, oneImageHelper.getDRLevel());
-                double[] inVector = getIntegralAboveBackground(fn, 100, 2.0, closeImageAfterProcessing);
-                        
-                levV[imageItr] = oneImageHelper.getDRLevel();
-                intRV[imageItr] = inVector[0];
+
+                // Get some image stats
+                getImageStats(fn, oneImageHelper);
+                
+                // Blood ideantification
+                // Run the background extractio algo and calculate the integrals
+                double[] inVector = {0,0,0,0};
+                if( ! getIntegralAboveBackground(inVector, fn, 100, 0.2, closeImageAfterProcessing) ) { 
+                    cntr++;
+                    continue;
+                }
+                
+                // TODO
+                // aqui falta normalizar al tama~no de la imagen para poder comparar integrales
+                // !!!!!!!!!!!!!!!!!!!
+                
+                areaV[imageItr]             = oneImageHelper.getSizeX() * oneImageHelper.getSizeY();
+                effectiveRadiusV[imageItr]  = inVector[3]; // The effective radious info is here
+                levV[imageItr]              = oneImageHelper.getDRLevel();
+                intRV[imageItr]             = inVector[0];
                 imageItr++;
             }
             cntr++;
         }
 
+        // The areas will have to be normalized cause all the pictures have different size
+        // Find the biggest Image.
+        int biggestImageId = -1;
+        double biggestArea = 0;
+        for(int i = 0 ; i < imageItr ; i++) {
+            if( areaV[i] > biggestArea ) {
+                biggestArea = areaV[i];
+                biggestImageId = i;
+            }
+        }
+        // Take the area of the biggest image to be 100.
+        // Convert all areas to these units
+        for(int i = 0 ; i < imageItr ; i++) {
+            areaV[i] = areaV[i] * 100 / biggestArea;
+            //intRV[i] = 
+        }
+        
+        // On this units normalize the integrals to the biggest
+        //for(int i = 0 ; i < imageItr ; i++) {
+        //    intRV[i] = intRV[i] * (100/areaV[i]);
+       // }
+        
         // R
         String[] R_args = {"--no-save"};
         Rengine re = new Rengine(R_args, false, null);
@@ -88,17 +130,73 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
     }
 
     
-    public double[] getIntegralAboveBackground(String fn, double backgSubsRolling, double kfactor, boolean closeImage) {
+    public boolean getIntegralAboveBackground(double [] inVector, String fn, double backgSubsRolling, double kfactor, boolean closeImage) {
 
         // Open
-        ImagePlus image = IJ.openImage(fn);
+        ImagePlus imageOr = IJ.openImage(fn);
+        imageOr.show();
+        
+        // Dialogue
+        GenericDialog gd = new GenericDialog("Parameters");
+        // default value is 0.00, 2 digits right of the decimal point
+        gd.addCheckbox("Enhance contrast", true);
+        gd.addNumericField("Saturated [Enhance Contrast]", 0.4, 2);
+        gd.addCheckbox("Equalize", false);
+        gd.addCheckbox("Substract Background", true);
+        gd.showDialog();
+        if (gd.wasCanceled()) {
+            if ( closeImage ) {
+                imageOr.changes = false;
+                imageOr.close();
+            }     
+            return false;
+        }
+        // get entered values
+        boolean enhanceContrast = gd.getNextBoolean();
+        double saturated = gd.getNextNumber();
+        boolean equalize = gd.getNextBoolean();
+        boolean substractBackground = gd.getNextBoolean();
+        
+        
+        ImagePlus image = imageOr.duplicate();
         image.show();
-        // Trying to equalize the image by Enhance Contrast using Equalize histogram
-        IJ.run("Enhance Contrast...", "saturated=0.4 equalize");
-        // Perform background substraction
-        String bgSubtraction = "rolling=" + backgSubsRolling + "  stack";
-        IJ.run("Subtract Background...", bgSubtraction);
 
+        
+        // close the image used to make a selection
+        //imageOr.close();
+        
+        // Trying to equalize the image by Enhance Contrast using Equalize histogram
+        if( enhanceContrast ) {
+            String runS = "saturated=";
+            runS += String.format("%.1f", saturated);
+            if ( equalize ) { runS += " equalize"; }
+            IJ.run("Enhance Contrast...", runS );
+        }
+        // Perform background substraction
+        if ( substractBackground ) {
+            String bgSubtraction = "rolling=" + backgSubsRolling + "  stack";
+            IJ.run("Subtract Background...", bgSubtraction);
+        }
+
+        // Give it a go
+        // Dialogue
+        GenericDialog gd2 = new GenericDialog("Continue ...");
+        gd2.addMessage("Proceed ?");
+        gd2.showDialog();
+        if (gd.wasCanceled()) {
+            if ( closeImage ) {
+                image.changes = false;
+                image.close();
+                imageOr.changes = false;
+                imageOr.close();
+            }     
+            return false;
+        }
+        // Close the image used to compare
+        imageOr.changes = false;
+        imageOr.close();
+        
+        
         ImageProcessor ip = image.getProcessor();
         int[][] img_matrix = ip.getIntArray();
         int sizex = img_matrix.length;
@@ -147,35 +245,46 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
                 int G = img_matrix[i][j] >> 8 & 0xFF;
                 int R = img_matrix[i][j] >> 16 & 0xFF;
 
+                if ( CalcDistance2(sizex/2, sizey/2, i, j) > effectiveRadius*effectiveRadius ) continue; 
+                
                 if (R != 0 && G != 0 && B != 0) {
 
                     if (R > aR * kfactor) {
-                        inR += R;
+                        inR++; // += R;
                     }
                     if (G > aG * kfactor) {
-                        inG += G;
+                        inG++; // += G;
                     }
                     if (B > aB * kfactor) {
-                        inB += B;
+                        inB++; // += B;
                     }
 
                 }
             }
         }
 
+        // Let's express area as a fraction of the total area
+        // use the radius
+        inR = inR / ( PI * effectiveRadius*effectiveRadius );
+        inG = inG / ( PI * effectiveRadius*effectiveRadius );
+        inB = inB / ( PI * effectiveRadius*effectiveRadius );
+        
         System.out.println("sizex : " + sizex + ", sizey = " + sizey);
         System.out.printf("Average  R,G,B = %.1f, %.1f, %.1f\n", aR, aG, aB);
-        System.out.printf("Integral R,G,B = %.1f, %.1f, %.1f\n", inR, inG, inB);
+        System.out.printf("Integral R,G,B = %.5f, %.5f, %.5f\n", inR, inG, inB);
 
-        double[] inVector = { inR, inG, inB };
-
+        inVector[0] = ( inR + inG + inB )/3.;
+        inVector[1] = inG;
+        inVector[2] = inB;
+        inVector[3] = effectiveRadius;
+        
         // get rid of the image
         if ( closeImage ) {
             image.changes = false;
             image.close();
         }        
         
-        return inVector;
+        return true;
     }
 
 
@@ -311,7 +420,7 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
             }
         }
 
-        System.out.printf("Number of files referenced in file = %d\n", ImagesHelperList.size());
+        System.out.printf("Number of files referenced in file %s = %d\n", csvFile, ImagesHelperList.size());
 
     }
 
@@ -346,6 +455,19 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
          percSat= gd.getNextNumber();
          gammaVal= gd.getNextNumber();
          */
+
+    private void getImageStats(String fn, ImageHelper oneImageHelper) {
+        
+        ImagePlus image = IJ.openImage(fn);
+        ImageProcessor ip = image.getProcessor();
+
+        // Fill the helper with the needed info
+        oneImageHelper.setSizeY( ip.getHeight() );
+        oneImageHelper.setSizeX( ip.getWidth() );
+        
+        image.close();
+        
+    }
     
 }
 

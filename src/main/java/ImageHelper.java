@@ -28,6 +28,9 @@ public class ImageHelper {
     
     public void setSizeX(int s) { this.sizex = s; }
     public void setSizeY(int s) { this.sizey = s; }
+    public void setNormalizedArea() {
+        // 
+    }
     
     
     
