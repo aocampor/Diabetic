@@ -29,7 +29,10 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
 
     // List of ImageHelpers, one per image analyzed
     public List<ImageHelper> ImagesHelperList;
-
+    // Blink run
+    public boolean blindRun = false;
+    
+    
     public Diabetic_Retinopathy() {
 
         this.ImagesHelperList = new ArrayList<ImageHelper>();
@@ -44,7 +47,8 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         loadCSVFile("/home/idarraga/storage/Diabetic_Retinopathy_Detection/trainLabels.csv");
         int nImagesProcess = 20;
         boolean closeImageAfterProcessing = true;
-
+        blindRun = false;
+        
         //int setSize = ImagesHelperList.size();
 
         // prepare R plot
@@ -74,7 +78,7 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
                 // Blood ideantification
                 // Run the background extractio algo and calculate the integrals
                 double[] inVector = {0,0,0,0};
-                if( ! getIntegralAboveBackground(inVector, fn, 100, 0.2, closeImageAfterProcessing) ) { 
+                if( ! getIntegralAboveBackground(inVector, fn, 100, 0.8, closeImageAfterProcessing) ) { 
                     cntr++;
                     continue;
                 }
@@ -141,9 +145,9 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         // default value is 0.00, 2 digits right of the decimal point
         gd.addCheckbox("Enhance contrast", true);
         gd.addNumericField("Saturated [Enhance Contrast]", 0.4, 2);
-        gd.addCheckbox("Equalize", false);
-        gd.addCheckbox("Substract Background", true);
-        gd.showDialog();
+        gd.addCheckbox("Equalize", true);
+        gd.addCheckbox("Substract Background", false);
+        if (!blindRun) { gd.showDialog(); }
         if (gd.wasCanceled()) {
             if ( closeImage ) {
                 imageOr.changes = false;
@@ -182,7 +186,7 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         // Dialogue
         GenericDialog gd2 = new GenericDialog("Continue ...");
         gd2.addMessage("Proceed ?");
-        gd2.showDialog();
+        if (!blindRun) { gd2.showDialog(); }
         if (gd.wasCanceled()) {
             if ( closeImage ) {
                 image.changes = false;
@@ -192,9 +196,6 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
             }     
             return false;
         }
-        // Close the image used to compare
-        imageOr.changes = false;
-        imageOr.close();
         
         
         ImageProcessor ip = image.getProcessor();
@@ -237,6 +238,9 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
         aG /= pixelsConsidered;
         aB /= pixelsConsidered;
 
+        System.out.println("sizex : " + sizex + ", sizey = " + sizey);
+        System.out.printf("Average  R,G,B = %.1f, %.1f, %.1f\n", aR, aG, aB);
+
         // Integral over the average
         double inR = 0, inG = 0, inB = 0;
         for (int i = 0; i < sizex; i++) {
@@ -247,33 +251,52 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
 
                 if ( CalcDistance2(sizex/2, sizey/2, i, j) > effectiveRadius*effectiveRadius ) continue; 
                 
+                if ( i == 840 && j == 1284 ) {
+                    System.err.printf("%d, %d, %d\n", R,G,B);
+                }
+                
                 if (R != 0 && G != 0 && B != 0) {
 
-                    if (R > aR * kfactor) {
+                    if (R > aR && G < aG && B < aB) {
                         inR++; // += R;
+                        // Mark then this pixel for the purpose of seeing what the algoright did
+                        img_matrix[i][j] = 0x000000FF;
+
                     }
-                    if (G > aG * kfactor) {
+                    if (G < aG * kfactor) {
                         inG++; // += G;
                     }
-                    if (B > aB * kfactor) {
+                    if (B < aB * kfactor) {
                         inB++; // += B;
                     }
-
+                    
                 }
             }
         }
 
+        // push the modified matrix in the processor
+        ip.setIntArray(img_matrix);
+        image.setProcessor(ip);
+        
+        // Dialogue
+        GenericDialog gd3 = new GenericDialog("Done");
+        gd3.addMessage("Done");
+        if (!blindRun) { gd3.showDialog(); }
+        
+        // Close the image used to compare
+        imageOr.changes = false;
+        imageOr.close();
+
+        
         // Let's express area as a fraction of the total area
         // use the radius
-        inR = inR / ( PI * effectiveRadius*effectiveRadius );
-        inG = inG / ( PI * effectiveRadius*effectiveRadius );
-        inB = inB / ( PI * effectiveRadius*effectiveRadius );
+        inR = inR / pixelsConsidered; //( PI * effectiveRadius*effectiveRadius );
+        inG = inG / pixelsConsidered; //( PI * effectiveRadius*effectiveRadius );
+        inB = inB / pixelsConsidered; //( PI * effectiveRadius*effectiveRadius );
         
-        System.out.println("sizex : " + sizex + ", sizey = " + sizey);
-        System.out.printf("Average  R,G,B = %.1f, %.1f, %.1f\n", aR, aG, aB);
         System.out.printf("Integral R,G,B = %.5f, %.5f, %.5f\n", inR, inG, inB);
 
-        inVector[0] = ( inR + inG + inB )/3.;
+        inVector[0] = inR;
         inVector[1] = inG;
         inVector[2] = inB;
         inVector[3] = effectiveRadius;
