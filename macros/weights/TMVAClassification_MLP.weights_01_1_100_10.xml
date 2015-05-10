@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<MethodSetup Method="MLP::MLP">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Sun May 10 09:30:05 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/home/aocampor/DiabeticRetinophaty/macros"/>
+    <Info name="Training events" value="99147"/>
+    <Info name="TrainingTime" value="7.50641479e+01"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="NCycles" modified="Yes">100</Option>
+    <Option name="HiddenLayers" modified="Yes">N+10</Option>
+    <Option name="NeuronType" modified="No">sigmoid</Option>
+    <Option name="RandomSeed" modified="No">1</Option>
+    <Option name="EstimatorType" modified="No">MSE</Option>
+    <Option name="NeuronInputType" modified="No">sum</Option>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="Yes">N</Option>
+    <Option name="H" modified="Yes">False</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="TrainingMethod" modified="No">BP</Option>
+    <Option name="LearningRate" modified="No">2.000000e-02</Option>
+    <Option name="DecayRate" modified="No">1.000000e-02</Option>
+    <Option name="TestRate" modified="Yes">10</Option>
+    <Option name="EpochMonitoring" modified="No">False</Option>
+    <Option name="Sampling" modified="No">1.000000e+00</Option>
+    <Option name="SamplingEpoch" modified="No">1.000000e+00</Option>
+    <Option name="SamplingImportance" modified="No">1.000000e+00</Option>
+    <Option name="SamplingTraining" modified="No">True</Option>
+    <Option name="SamplingTesting" modified="No">False</Option>
+    <Option name="ResetStep" modified="No">50</Option>
+    <Option name="Tau" modified="No">3.000000e+00</Option>
+    <Option name="BPMode" modified="No">sequential</Option>
+    <Option name="BatchSize" modified="No">-1</Option>
+    <Option name="ConvergenceImprove" modified="No">1.000000e-30</Option>
+    <Option name="ConvergenceTests" modified="No">-1</Option>
+    <Option name="UseRegulator" modified="No">False</Option>
+    <Option name="UpdateLimit" modified="No">10000</Option>
+    <Option name="CalculateErrors" modified="No">False</Option>
+    <Option name="WeightRange" modified="No">1.000000e+00</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="Red" Label="Red" Title="Red" Unit="" Internal="Red" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="1" Expression="Green" Label="Green" Title="Green" Unit="" Internal="Green" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="2" Expression="Blue" Label="Blue" Title="Blue" Unit="" Internal="Blue" Type="F" Min="0.00000000e+00" Max="2.26000000e+02"/>
+    <Variable VarIndex="3" Expression="GreenOverRed" Label="GreenOverRed" Title="GreenOverRed" Unit="" Internal="GreenOverRed" Type="F" Min="0.00000000e+00" Max="4.00000000e+00"/>
+    <Variable VarIndex="4" Expression="BlueOverRed" Label="BlueOverRed" Title="BlueOverRed" Unit="" Internal="BlueOverRed" Type="F" Min="0.00000000e+00" Max="8.00000000e+00"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Background" Index="0"/>
+    <Class Name="Signal" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="1">
+    <Transform Name="Normalize">
+      <Selection>
+        <Input NInputs="5">
+          <Input Type="Variable" Label="Red" Expression="Red"/>
+          <Input Type="Variable" Label="Green" Expression="Green"/>
+          <Input Type="Variable" Label="Blue" Expression="Blue"/>
+          <Input Type="Variable" Label="GreenOverRed" Expression="GreenOverRed"/>
+          <Input Type="Variable" Label="BlueOverRed" Expression="BlueOverRed"/>
+        </Input>
+        <Output NOutputs="5">
+          <Output Type="Variable" Label="Red" Expression="Red"/>
+          <Output Type="Variable" Label="Green" Expression="Green"/>
+          <Output Type="Variable" Label="Blue" Expression="Blue"/>
+          <Output Type="Variable" Label="GreenOverRed" Expression="GreenOverRed"/>
+          <Output Type="Variable" Label="BlueOverRed" Expression="BlueOverRed"/>
+        </Output>
+      </Selection>
+      <Class ClassIndex="0">
+        <Ranges>
+          <Range Index="0" Min="0.0000000000000000e+00" Max="2.5500000000000000e+02"/>
+          <Range Index="1" Min="0.0000000000000000e+00" Max="2.5500000000000000e+02"/>
+          <Range Index="2" Min="0.0000000000000000e+00" Max="2.2600000000000000e+02"/>
+          <Range Index="3" Min="0.0000000000000000e+00" Max="3.0000000000000000e+00"/>
+          <Range Index="4" Min="0.0000000000000000e+00" Max="6.0000000000000000e+00"/>
+        </Ranges>
+      </Class>
+      <Class ClassIndex="1">
+        <Ranges>
+          <Range Index="0" Min="0.0000000000000000e+00" Max="2.5500000000000000e+02"/>
+          <Range Index="1" Min="0.0000000000000000e+00" Max="2.5100000000000000e+02"/>
+          <Range Index="2" Min="0.0000000000000000e+00" Max="1.8700000000000000e+02"/>
+          <Range Index="3" Min="0.0000000000000000e+00" Max="4.0000000000000000e+00"/>
+          <Range Index="4" Min="0.0000000000000000e+00" Max="8.0000000000000000e+00"/>
+        </Ranges>
+      </Class>
+      <Class ClassIndex="2">
+        <Ranges>
+          <Range Index="0" Min="0.0000000000000000e+00" Max="2.5500000000000000e+02"/>
+          <Range Index="1" Min="0.0000000000000000e+00" Max="2.5500000000000000e+02"/>
+          <Range Index="2" Min="0.0000000000000000e+00" Max="2.2600000000000000e+02"/>
+          <Range Index="3" Min="0.0000000000000000e+00" Max="4.0000000000000000e+00"/>
+          <Range Index="4" Min="0.0000000000000000e+00" Max="8.0000000000000000e+00"/>
+        </Ranges>
+      </Class>
+    </Transform>
+  </Transformations>
+  <MVAPdfs/>
+  <Weights>
+    <Layout NLayers="3">
+      <Layer Index="0" NNeurons="6">
+        <Neuron NSynapses="15">
+          -7.4782865237257390e-01 8.7518302467351361e-01 2.5687677791802850e+00 3.2694567671065968e+00 -1.0289602635417424e+01 -8.3635514805067714e+00 7.9380698957413465e+00 4.3359843044297897e+00 -2.8890495478296403e+00 -1.1579032019856796e+00 -2.0161315570568603e+00 1.3051106015863652e+00 -1.1654536771542428e+00 -2.3492777968820924e-01 -8.9695664461015656e-01 
+        </Neuron>
+        <Neuron NSynapses="15">
+          3.5794197846401499e+00 -7.5388613282074968e-01 1.8293114893477275e-01 -1.6981997893606078e+00 4.9428313033354412e+00 4.8449332170419845e+00 -5.3215011299815167e+00 2.6812930214783202e+00 -6.6982454123677551e+00 -5.8109579522180532e-01 -3.2124936799302356e-01 3.3367408884373502e+00 -1.3571003893646907e+00 -1.8724441463087975e+00 -8.3822628445834477e-02 
+        </Neuron>
+        <Neuron NSynapses="15">
+          2.5538603972675968e+00 4.7546165259677364e+00 7.3806949836842550e+00 -1.9703941186316691e+00 9.5833436795991336e+00 1.4958149804753562e+00 -1.3839334338775011e+01 3.5003858250549444e+00 -8.0514589046292997e+00 1.9682103526180939e+00 1.2828494013073128e+00 1.6984424343486917e+00 1.6972106140396470e+00 1.2553105628402321e+00 -8.9167164121897824e-01 
+        </Neuron>
+        <Neuron NSynapses="15">
+          2.8380931527147041e-01 9.0221331013341999e-01 -1.5521616655990784e+00 1.4812970975986177e+00 2.8523431700634325e+00 3.0299935021987654e+00 6.9677755546962117e-01 -3.8583107963412111e+00 1.1347836029721097e+00 -9.5693685787643734e-01 -1.6910381360814930e-01 -7.2475489379492841e-01 -1.3102239489255667e+00 1.3058316607532263e+00 1.0903318486337008e+00 
+        </Neuron>
+        <Neuron NSynapses="15">
+          -3.7270536518182400e-02 7.5768293677765131e-01 -6.8713335846353396e-01 1.9246370195199021e+00 -1.7306964266045539e+00 -1.9666064938813925e+00 2.2062762925670936e+00 -4.2305590583543902e+00 3.2225358742032202e+00 1.3902231356700384e-01 2.0654423995221638e-01 -2.6170221437905605e-01 1.7216207983697214e+00 9.7804884002422154e-01 1.7919265304945780e+00 
+        </Neuron>
+        <Neuron NSynapses="15">
+          -1.8810531137090043e+00 -1.8837334684512430e+00 -1.4974380812911958e-01 -1.1483433267978762e+00 7.3359405132520434e+00 3.9503218577280546e+00 -8.6267501563746318e+00 1.0907095358550876e+00 -5.9540297914460041e+00 -2.1649249650781739e+00 -1.7535125782188949e+00 -6.3052699053663586e-01 -1.9074941254779263e+00 -1.8358812764982744e+00 -1.7607163588804939e+00 
+        </Neuron>
+      </Layer>
+      <Layer Index="1" NNeurons="16">
+        <Neuron NSynapses="1">
+          1.9610169759669964e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -3.2185723686091734e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          1.5346355890041488e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          2.2636275934774841e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -1.5433662567924480e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          2.1575029359098266e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -1.3230218054904286e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -2.1449875715017335e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -1.3625847461970126e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -5.2962948043721603e-01 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -8.1626529913620993e-01 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -1.6071488147824360e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          2.5742127380686358e-01 
+        </Neuron>
+        <Neuron NSynapses="1">
+          5.6712662545296122e-01 
+        </Neuron>
+        <Neuron NSynapses="1">
+          -1.2259049828724422e+00 
+        </Neuron>
+        <Neuron NSynapses="1">
+          2.5976815041874035e+00 
+        </Neuron>
+      </Layer>
+      <Layer Index="2" NNeurons="1">
+        <Neuron NSynapses="0"/>
+      </Layer>
+    </Layout>
+  </Weights>
+</MethodSetup>

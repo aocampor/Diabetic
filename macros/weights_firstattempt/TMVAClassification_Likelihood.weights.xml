@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<MethodSetup Method="Likelihood::Likelihood">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Tue May  5 01:16:36 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/media/aocampor/MyDisk/DiabeticRetinophaty/macros"/>
+    <Info name="Training events" value="1750"/>
+    <Info name="TrainingTime" value="6.84404373e-03"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="No">None</Option>
+    <Option name="H" modified="Yes">True</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="TransformOutput" modified="No">False</Option>
+  </Options>
+  <Variables NVar="4">
+    <Variable VarIndex="0" Expression="Area1" Label="Area1" Title="Area1" Unit="" Internal="Area1" Type="F" Min="2.02270001e-02" Max="9.28969026e-01"/>
+    <Variable VarIndex="1" Expression="Area2" Label="Area2" Title="Area2" Unit="" Internal="Area2" Type="F" Min="2.04900000e-02" Max="4.08845991e-01"/>
+    <Variable VarIndex="2" Expression="Area3" Label="Area3" Title="Area3" Unit="" Internal="Area3" Type="F" Min="8.18699971e-03" Max="2.65781999e-01"/>
+    <Variable VarIndex="3" Expression="Area4" Label="Area4" Title="Area4" Unit="" Internal="Area4" Type="F" Min="3.37320007e-02" Max="5.41456997e-01"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Background" Index="0"/>
+    <Class Name="Signal" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs/>
+  <Weights NVariables="4" NClasses="2">
+    <PDFDescriptor VarIndex="0" ClassIndex="0">
+      <PDF Name="Likelihood PDF Sig[0]" MinNSmooth="20" MaxNSmooth="20" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area1_sig_original" NBins="7" XMin="2.0227000117301941e-02" XMax="9.2896902561187744e-01" HasEquidistantBins="1">
+          5.10000000e+01 2.04000000e+02 4.26000000e+02 4.28000000e+02 2.26000000e+02 6.10000000e+01 4.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="0" ClassIndex="1">
+      <PDF Name="Likelihood PDF Bkg[0]" MinNSmooth="20" MaxNSmooth="20" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area1_bgd_original" NBins="7" XMin="2.0227000117301941e-02" XMax="9.2896902561187744e-01" HasEquidistantBins="1">
+          9.00000000e+00 5.10000000e+01 1.11000000e+02 1.11000000e+02 6.20000000e+01 6.00000000e+00 0.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="1" ClassIndex="0">
+      <PDF Name="Likelihood PDF Sig[1]" MinNSmooth="1" MaxNSmooth="1" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area2_sig_original" NBins="7" XMin="2.0490000024437904e-02" XMax="4.0884599089622498e-01" HasEquidistantBins="1">
+          1.40000000e+01 1.44000000e+02 4.51000000e+02 4.93000000e+02 2.35000000e+02 5.70000000e+01 6.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="1" ClassIndex="1">
+      <PDF Name="Likelihood PDF Bkg[1]" MinNSmooth="10" MaxNSmooth="10" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area2_bgd_original" NBins="7" XMin="2.0490000024437904e-02" XMax="4.0884599089622498e-01" HasEquidistantBins="1">
+          0.00000000e+00 3.90000000e+01 1.11000000e+02 1.33000000e+02 4.90000000e+01 1.60000000e+01 2.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="2" ClassIndex="0">
+      <PDF Name="Likelihood PDF Sig[2]" MinNSmooth="1" MaxNSmooth="1" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area3_sig_original" NBins="7" XMin="8.1869997084140778e-03" XMax="2.6578199863433838e-01" HasEquidistantBins="1">
+          2.60000000e+01 2.67000000e+02 5.67000000e+02 3.60000000e+02 1.30000000e+02 4.20000000e+01 8.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="2" ClassIndex="1">
+      <PDF Name="Likelihood PDF Bkg[2]" MinNSmooth="1" MaxNSmooth="1" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area3_bgd_original" NBins="7" XMin="8.1869997084140778e-03" XMax="2.6578199863433838e-01" HasEquidistantBins="1">
+          0.00000000e+00 6.20000000e+01 1.59000000e+02 8.20000000e+01 3.90000000e+01 5.00000000e+00 3.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="3" ClassIndex="0">
+      <PDF Name="Likelihood PDF Sig[3]" MinNSmooth="1" MaxNSmooth="1" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area4_sig_original" NBins="7" XMin="3.3732000738382339e-02" XMax="5.4145699739456177e-01" HasEquidistantBins="1">
+          6.00000000e+00 1.30000000e+02 4.07000000e+02 5.55000000e+02 2.38000000e+02 5.60000000e+01 8.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+    <PDFDescriptor VarIndex="3" ClassIndex="1">
+      <PDF Name="Likelihood PDF Bkg[3]" MinNSmooth="1" MaxNSmooth="1" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+        <Histogram Name="Area4_bgd_original" NBins="7" XMin="3.3732000738382339e-02" XMax="5.4145699739456177e-01" HasEquidistantBins="1">
+          0.00000000e+00 2.40000000e+01 9.80000000e+01 1.50000000e+02 6.80000000e+01 7.00000000e+00 3.00000000e+00 
+        </Histogram>
+      </PDF>
+    </PDFDescriptor>
+  </Weights>
+</MethodSetup>
