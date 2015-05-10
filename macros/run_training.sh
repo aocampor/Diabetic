@@ -1,3 +1,8 @@
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA01_1_1_1.root /home/aocampor/DiabeticRetinophaty/merge/0.root /home/aocampor/DiabeticRetinophaty/merge/1.root -1 -1 1 1 1
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_1_1.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_1_1.xml
+
 #python TrainMVA.py TMVA34.root ../merge/3Fold.root ../merge/4Fold.root 1000000 1000000 4 500
 #mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_34.C
 #mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_34.xml
@@ -30,17 +35,15 @@
 #mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_500_1.C
 #mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_500_1.xml
 
-#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
-python TrainMVA.py TMVA01_1_800_10.root ../merge/0.root ../merge/1.root -1 -1 1 800 10
-mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_800_10.C
-mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_800_10.xml
-
-#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
-python TrainMVA.py TMVA01_1_800_10.root ../merge/0.root ../merge/1.root -1 -1 1 800 100
-mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_800_10.C
-mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_800_10.xml
-
-
+##print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+#python TrainMVA.py TMVA01_1_800_100.root /home/aocampor/DiabeticRetinophaty/merge/0.root /home/aocampor/DiabeticRetinophaty/merge/1.root -1 -1 1 800 100
+#mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_800_100.C
+#mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_800_100.xml
+#
+##print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+#python TrainMVA.py TMVA01_1_800_10.root /home/aocampor/DiabeticRetinophaty/merge/0.root /home/aocampor/DiabeticRetinophaty/merge/1.root -1 -1 1 800 10
+#mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_800_10.C
+#mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_800_10.xml
 
 ##print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
 #python TrainMVA.py TMVA01_1_100_0.root ../Output/0.root ../Output/1.root -1 -1 1 100 0
