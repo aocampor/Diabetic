@@ -43,9 +43,9 @@ public class Diabetic_Retinopathy implements PlugIn { //PlugInFilter {
     public void run(String arg) { // run(ImageProcessor ip) {
 
         System.out.println("Run ...\n");
-        String datapath = "/home/idarraga/storage/Diabetic_Retinopathy_Detection/JonnyBeGood/";
-        loadCSVFile("/home/idarraga/storage/Diabetic_Retinopathy_Detection/trainLabels.csv");
-        int nImagesProcess = 20;
+        String datapath = "/media/idarraga/data/Diabetic_Retinopathy_Detection/JonnyBeGood/";
+        loadCSVFile("/media/idarraga/data/Diabetic_Retinopathy_Detection/trainLabels.csv");
+        int nImagesProcess = 10;
         boolean closeImageAfterProcessing = true;
         blindRun = false;
         
