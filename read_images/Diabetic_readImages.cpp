@@ -25,6 +25,7 @@
 
 #include "TFile.h"
 #include "TTree.h"
+#include "TString.h"
 #pragma link C++ class vector<std::string>;
 
 using namespace std;
@@ -232,7 +233,6 @@ int main(int argc, char ** argv) {
 
 void ProcessImages(vector<pair<string, int> > csvinfo, input_parameters ip) {
 
-	string command = "/bin/bash -c \"convert  -resize 10% ";
 	vector<pair<string, int> >::iterator i  = csvinfo.begin();
 	vector<pair<string, int> >::iterator iE = csvinfo.end();
 
@@ -339,7 +339,8 @@ string LowerRes(string file, double lowrespercentage, string prefix, input_param
 	}
 
 	// prepare command
-	string command = "/bin/bash -c \"convert  -resize 10% ";
+	TString command = "/bin/bash -c \"convert  -resize ";
+	command += TString::Format("%.0f%% ", lowrespercentage);
 	command += infn;
 	command += ' ';
 	command += outfn;
@@ -348,9 +349,9 @@ string LowerRes(string file, double lowrespercentage, string prefix, input_param
 	cout << "[INFO] Convert --> " << outfn << endl;
 
 	// launch command
-	int st = system( command.c_str() );
+	int st = system( command.Data() );
 	if ( st != 0 ) {
-		cout << "[ERRO] something wrong with command --> " << command << endl;
+		cout << "[ERRO] something wrong with command --> " << command.Data() << endl;
 	}
 
 
