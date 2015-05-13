@@ -34,18 +34,20 @@ def GetMax(rgb):
     else:
         maxmin[1] = rgb[0]
     maxmin[2] = maxmin[0] - maxmin[1]
+    #print maxmin
     return maxmin
 
 def GetHue(maxi, rgb):
-    if(maxi[2] == 0):
-        return 0
-    if(maxi[0] == rgb[0]):
-        return 60*((abs(rgb[1]-rgb[2])/maxi[2])%6)
-    if(maxi[0] == rgb[1]):
-        return 60*(abs(rgb[2]-rgb[0])/maxi[2]+2)
-    if(maxi[0] == rgb[2]):
-        return 60*(abs(rgb[0]-rgb[1])/maxi[2]+4)
-    return -1
+    hue = 0
+    if(maxi[2] != 0):
+        if(maxi[0] == rgb[0]):
+            hue = 60*((abs(rgb[1]-rgb[2])/maxi[2])%6)
+        if(maxi[0] == rgb[1]):
+            hue = 60*(abs(rgb[2]-rgb[0])/maxi[2]+2)
+        if(maxi[0] == rgb[2]):
+            hue = 60*(abs(rgb[0]-rgb[1])/maxi[2]+4)
+    #print hue
+    return hue
 
 def GetRGBp(rgb):
     rgbp = [0,0,0]
@@ -112,6 +114,11 @@ def GetDic(labels):
     labf.close()
     return dic
 
+#def SquareApproach():
+    
+
+
+
 if __name__ == "__main__":
 
     #Folder = '/home/aocampor/DiabeticRetinophaty/sample/'
@@ -155,7 +162,7 @@ if __name__ == "__main__":
             os.system('mkdir ' + outdir + 'mod/' + str(level[0]))
         output = outdir + '/mod/' + str(level[0]) + '/' + item1
         if(not os.path.isfile(output) ):
-            command = 'convert  -resize 5% ' + inputs + ' ' + output
+            command = 'convert  -resize 10% ' + inputs + ' ' + output
             os.system(command)
         rootname = outdir + '/mod/' + str(level[0]) + '/Image' + token[0] + '.root'    
         if(os.path.isfile(rootname)):
@@ -166,10 +173,12 @@ if __name__ == "__main__":
         colorg = array('d', [0])
         colorb = array('d', [0])
         hue = array('d', [0])
-        bright = array('d', [0])
-        sat = array('d', [0])
-        #colorgor = array('d', [0])
-        #colorbor = array('d', [0])
+        pixx = array('d', [0])
+        pixy = array('d', [0])
+        #bright = array('d', [0])
+        #sat = array('d', [0])
+        colorgor = array('d', [0])
+        colorbor = array('d', [0])
         #level = array('i', [0])
         
         #level[0] = int(dic[token[0]])
@@ -178,10 +187,12 @@ if __name__ == "__main__":
         tree.Branch('Green', colorg, 'Green/D')
         tree.Branch('Blue', colorb, 'Blue/D')
         tree.Branch('Hue', hue, 'Hue/D')
-        tree.Branch('Bright', bright, 'Bright/D')
-        tree.Branch('Saturation', sat, 'Saturation/D')
-        #tree.Branch('GreenOverRed', colorgor, 'GreenOverRed/D')
-        #tree.Branch('BlueOverRed', colorbor, 'BlueOverRed/D')
+        #tree.Branch('Bright', bright, 'Bright/D')
+        #tree.Branch('Saturation', sat, 'Saturation/D')
+        tree.Branch('GreenOverRed', colorgor, 'GreenOverRed/D')
+        tree.Branch('BlueOverRed', colorbor, 'BlueOverRed/D')
+        tree.Branch('PixelX', pixx, 'PixelX/D')
+        tree.Branch('PixelY', pixy, 'PixelY/D')
         tree.Branch('Level', level, 'Level/I')
 
         # just a dialogue to interact with this
@@ -189,42 +200,86 @@ if __name__ == "__main__":
         #d.set_background_title("Diabetes")
 
         #print(item)
-        imOriginal10p = Image.open(output)  # Can be many different formats.
+        im = Image.open(output)
         #im.rotate(0).show()
+        ###John part
+        #imOriginal10p = Image.open(output)  # Can be many different formats.
         
-        # Selection
-        im = ImageCrop(imOriginal10p)
-        #pid = im.rotate(0).show()
-        #if d.yesno("Continue?") == 0:
-        #    print pid
-        #else:
-        #    sys.exit(0)
-                
-        # work on the crop
+        ## Selection
+        #im = ImageCrop(imOriginal10p)
+        ##pid = im.rotate(0).show()
+        ##if d.yesno("Continue?") == 0:
+        ##    print pid
+        ##else:
+        ##    sys.exit(0)
+        #        
+        ## work on the crop
         pix = im.load()
         
         #pixg = im.convert('LA').load()
 
+        #colfreq = {}
+        #
+        #for i in range(im.size[0]):
+        #    for j in range(im.size[1]):
+        #        if(pix[i, j][0] <= 3 and pix[i, j][1] <= 3 and
+        #           pix[i, j][2] <= 3):
+        #            continue
+        #        key = str(pix[i, j][0]) + '_' + str(pix[i, j][1]) + '_' + str(pix[i, j][2])
+        #        if key in colfreq:
+        #            colfreq[key] = colfreq[key] + 1
+        #        else:
+        #            colfreq[key] = 1
+        #        
+        #mode = 0
+        #colorkey = ''
+        #for item in colfreq:
+        #    if(colfreq[item] > mode):
+        #        mode = colfreq[item]
+        #        colorkey = item
+                
         for i in range(im.size[0]):
             for j in range(im.size[1]):
+                #print pix[i,j]
                 if(pix[i, j][0] <= 3 and pix[i, j][1] <= 3 and
                    pix[i, j][2] <= 3):
                     continue
+                #key = str(pix[i, j][0])+'_'+str(pix[i, j][1])+'_'+str(pix[i, j][2])      
                 colorr[0] = pix[i, j][0]
                 colorg[0] = pix[i, j][1]
                 colorb[0] = pix[i, j][2]
+                pixx[0] = i
+                pixy[0] = j
+                #print mode, colfreq[key]
+                #if(colfreq[key] == mode):
+                #    colorr[0] = 255
+                #    colorg[0] = 255
+                #    colorb[0] = 255
+                #elif( colfreq[key] > 0.1*mode ):
+                #    colorr[0] = 255*(colfreq[key] - 0.01*mode)/(0.1*mode - 0.01*mode)
+                #    colorg[0] = 0
+                #    colorb[0] = 0
+                #elif( colfreq[key] > 0.01*mode ):
+                #    colorr[0] = 0
+                #    colorg[0] = 255*(colfreq[key] - 0.001*mode)/(0.01*mode - 0.001*mode)
+                #    colorb[0] = 0   
+                #else:
+                #    colorr[0] = 0
+                #    colorg[0] = 0
+                #    colorb[0] = 255*colfreq[key]/(0.001*mode)    
+
                 rgb = [colorr[0],colorg[0],colorb[0]]
                 rgbp = GetRGBp(rgb)
                 maxmin = GetMax(rgbp)
                 hue[0] = GetHue(maxmin, rgbp)
-                bright[0] = GetBrightness(rgb)
-                sat[0] = GetSaturation(maxmin)
-                #if(colorr[0] != 0):
-                #    colorbor[0] = colorb[0]/colorr[0]
-                #    colorgor[0] = colorg[0]/colorr[0]
-                #else:
-                #    colorbor[0] = 0
-                #    colorgor[0] = 0
+                #bright[0] = GetBrightness(rgb)
+                #sat[0] = GetSaturation(maxmin)
+                if(colorr[0] != 0):
+                    colorbor[0] = colorb[0]/colorr[0]
+                    colorgor[0] = colorg[0]/colorr[0]
+                else:
+                    colorbor[0] = 0
+                    colorgor[0] = 0
                 tree.Fill()
 
         rootfil.Write()

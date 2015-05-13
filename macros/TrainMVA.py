@@ -25,9 +25,16 @@ if __name__ == "__main__":
     factory.AddVariable("Red","F")
     factory.AddVariable("Green","F")
     factory.AddVariable("Blue","F")
+    factory.AddVariable("Hue","F")
+    #factory.AddVariable("Bright","F")
+    #factory.AddVariable("Saturation","F")
     factory.AddVariable("GreenOverRed","F")
     factory.AddVariable("BlueOverRed","F")
+    factory.AddVariable("PixelX","F")
+    factory.AddVariable("PixelY","F")
 
+    #for i in range(0,100):
+    #    factory.AddVariable("Pix"+str(i),"F")
 
     #files = ['background.root','signal.root']
 
@@ -83,7 +90,7 @@ if __name__ == "__main__":
                                     #"NeuronType=tanh",
                                     "VarTransform=N",
                                     "NCycles="+str(sys.argv[7]),
-                                    "HiddenLayers=N+"+str(sys.argv[8]),
+                                    "HiddenLayers=N+"+str(sys.argv[8])+",N",
                                     "TestRate=10",
                                     #"NTrees=850",
                                     #"nEventsMin=150",

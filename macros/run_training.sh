@@ -1,7 +1,42 @@
 #print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
-python TrainMVA.py TMVA01_1_1_1.root /home/aocampor/DiabeticRetinophaty/merge/0.root /home/aocampor/DiabeticRetinophaty/merge/1.root -1 -1 1 1 1
-mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_1_1.C
-mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_1_1.xml
+python TrainMVA.py TMVA01Right_1_400_10.root ../Salida/Right0.root ../Salida/Right1.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01Right_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01Right_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA01Left_1_400_10.root ../Salida/Left0.root ../Salida/Left1.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01Left_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01Left_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA02Right_1_400_10.root ../Salida/Right0.root ../Salida/Right2.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_02Right_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_02Right_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA02Left_1_400_10.root ../Salida/Left0.root ../Salida/Left2.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_02Left_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_02Left_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA03Right_1_400_10.root ../Salida/Right0.root ../Salida/Right3.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_03Right_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_03Right_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA03Left_1_400_10.root ../Salida/Left0.root ../Salida/Left3.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_03Left_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_03Left_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA04Right_1_400_10.root ../Salida/Right0.root ../Salida/Right4.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_04Right_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_04Right_1_400_10.xml
+
+#print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
+python TrainMVA.py TMVA04Left_1_400_10.root ../Salida/Left0.root ../Salida/Left4.root -1 -1 1 400 10
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_04Left_1_400_10.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_04Left_1_400_10.xml
 
 #python TrainMVA.py TMVA34.root ../merge/3Fold.root ../merge/4Fold.root 1000000 1000000 4 500
 #mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_34.C
