@@ -104,17 +104,17 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
 				if ( RGB_BELOW( 3 ) ) continue;
 
 				// Otherwise fill data
-				colorR = R;
-				colorG = G;
-				colorB = B;
+				colorR = (double)R;
+				colorG = (double)G;
+				colorB = (double)B;
 
 				// ratios
 				if ( R > 0 ) {
-					colorbor = B/R;
-					colorgor = G/R;
+					colorbor = (double)B/(double)R;
+					colorgor = (double)G/(double)R;
 				} else {
-					colorbor = 0;
-					colorgor = 0;
+					colorbor = 0.;
+					colorgor = 0.;
 				}
 
 				// Fill here one event
@@ -132,7 +132,7 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
 void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
 
 	int cropSpan = 50;
-	int searchSpan = 2;
+	int searchSpan = 3;
 	// Find the center ofthe rectangle to crop
 	int centerx = 0, centery = 0;
 	double maxmean = 0., mean = 0.;
