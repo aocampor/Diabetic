@@ -1,42 +1,7 @@
 #print 'TrainMVA.py outfile.root background.root signal.root #eventsback #eventsignal $cut $#cycles $#hiddenlayers'
-python TrainMVA.py TMVA01_1_1_10.root ../Image.root ../sig.root -1 -1 1 1 10
-mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_1_10.C
-mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_1_10.xml
-
-#cut $#cycles $#hiddenlayers'
-#1 -1 1 400 10
-#_400_10.C
-#Left_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#t -1 -1 1 400 10
-#1_400_10.C
-#Right_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#1 -1 1 400 10
-#_400_10.C
-#Left_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#t -1 -1 1 400 10
-#1_400_10.C
-#Right_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#1 -1 1 400 10
-#_400_10.C
-#Left_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#t -1 -1 1 400 10
-#1_400_10.C
-#Right_1_400_10.xml
-#
-#cut $#cycles $#hiddenlayers'
-#1 -1 1 400 10
-#_400_10.C
-#Left_1_400_10.xml
+python TrainMVA.py TMVA01_1_100_1.root ../Image.root ../sig.root -1 -1 1 100 1
+mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_01_1_100_1.C
+mv weights/TMVAClassification_MLP.weights.xml weights/TMVAClassification_MLP.weights_01_1_100_1.xml
 
 #python TrainMVA.py TMVA34.root ../merge/3Fold.root ../merge/4Fold.root 1000000 1000000 4 500
 #mv weights/TMVAClassification_MLP.class.C weights/TMVAClassification_MLP.class_34.C
