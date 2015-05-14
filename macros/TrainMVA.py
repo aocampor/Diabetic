@@ -25,9 +25,12 @@ if __name__ == "__main__":
 
     square = 10
     for i in range(0, square*square):
-        varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
-        varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
-        varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
+        #varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
+        #varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
+        #varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
+        varr = 'pix'+str(i) + 'R'
+        varg = 'pix'+str(i) + 'G'
+        varb = 'pix'+str(i) + 'B'
         #print 
         factory.AddVariable(varr,"I")
         factory.AddVariable(varg,"I")
