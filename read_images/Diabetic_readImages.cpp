@@ -34,7 +34,7 @@ using namespace std;
 
 #define __trainLabels 		"/home/aocampor/DiabeticRetinophaty/trainLabels.csv"
 #define __lenghtprintcsv 10
-#define __lowres_percentage 20
+#define __lowres_percentage 15
 #define debug false
 
 
@@ -76,171 +76,26 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   //cout << ip.rootfile << "," << ip.roottree << endl;
   
   // Variables
-  //int colorR;
-  //int colorG;
-  //int colorB;
-  //int pixx;
-  //int pixy;
-  //double colorgor;
-  //double colorbor;
+  int colorR;
+  int colorG;
+  int colorB;
+  int pixx;
+  int pixy;
+
   int width = width_i;
   int height = height_i;
   int drlevel = ip.drlevel;
 
-  double meanr = 0;
-  double rmsr = 0;
-  double skewnessr = 0;
-  double kurtosisr = 0;
-  double moder = 0;
-
-  double meang = 0;
-  double rmsg = 0;
-  double skewnessg = 0;
-  double kurtosisg = 0;
-  double modeg = 0;
-
-  double meanb = 0;
-  double rmsb = 0;
-  double skewnessb = 0;
-  double kurtosisb = 0;
-  double modeb = 0;
-  //cout << "Before Histos" << endl;
-  
-  std::ostringstream oss;
-  oss << rand()%1000;
-  string re = "HistoRed" + oss.str();
-  string gr = "HistoGreen" + oss.str();
-  string bl = "HistoBlue" + oss.str();
-
-  TH1D *histr = new TH1D(re.c_str(),"",256,0,256);
-  TH1D *histg = new TH1D(gr.c_str(),"",256,0,256);
-  TH1D *histb = new TH1D(bl.c_str(),"",256,0,256);
-  //  cout << "After Histos" << re << endl;
-  double R=0., G=0., B=0.;
-  for (int i = 0 ; i < width ; i++) {
-    for (int j = 0 ; j < height ; j++) {
-      R = (double)JPEGSAMPLE(3*(j*width + i)    );
-      G = (double)JPEGSAMPLE(3*(j*width + i) + 1);
-      B = (double)JPEGSAMPLE(3*(j*width + i) + 2);
-      if ( RGB_BELOW( 3 ) ) continue;
-      //  cout << " R " << R << " G " << G << " B " << B<< endl; 
-      histr->Fill(R);
-      histg->Fill(G);
-      histb->Fill(B);
-    }
-  }
-  //cout << "Getting values" << endl;
-  meanr = histr->GetMean();
-  rmsr = histr->GetRMS();
-  skewnessr = histr->GetSkewness();
-  kurtosisr = histr->GetKurtosis();
-  moder = histr->GetMaximum(); 
-
-  meang = histg->GetMean();
-  rmsg = histg->GetRMS();
-  skewnessg = histg->GetSkewness();
-  kurtosisg = histg->GetKurtosis();
-  modeg = histg->GetMaximum(); 
-
-  meanb = histb->GetMean();
-  rmsb = histb->GetRMS();
-  skewnessb = histb->GetSkewness();
-  kurtosisb = histb->GetKurtosis();
-  modeb = histb->GetMaximum(); 
-
-  //cout << "Values gotten" << endl;
-
-  //std::map<int,int> colorsr;
-  //std::map<int,int> colorsg;
-  //std::map<int,int> colorsb;
-  
-  //int square = 256;
-  //string be,re,gr,bl;
-
-  // Branches
-  //string temp;
-  /*
-  for(int i = 0 ; i< square; i++){
-    be = "H";
-    std::ostringstream oss;
-    oss << i;
-    be += oss.str();
-    re = be + 'R';
-    gr = be + 'G';
-    bl = be + 'B';
-    temp = re + "/I";
-    ip.roottree->Branch(re.c_str(), &colorsr[i], temp.c_str());
-    temp = gr + "/I";
-    ip.roottree->Branch(gr.c_str(), &colorsg[i], temp.c_str());
-    temp = bl + "/I";
-    ip.roottree->Branch(bl.c_str(), &colorsb[i], temp.c_str());
-    oss.clear();
-    be = "";
-  }
-  */
-  /*
   ip.roottree->Branch("Red", &colorR, "Red/I");
   ip.roottree->Branch("Green", &colorG, "Green/I");
   ip.roottree->Branch("Blue", &colorB, "Blue/I");
-  //ip.roottree->Branch("GreenOverRed", &colorgor, "GreenOverRed/D");
-  //ip.roottree->Branch("BlueOverRed", &colorbor, "BlueOverRed/D");
   ip.roottree->Branch("PixelX", &pixx, "PixelX/I");
   ip.roottree->Branch("PixelY", &pixy, "PixelY/I");
-  */
-  ip.roottree->Branch("MeanR", &meanr, "MeanR/D");
-  ip.roottree->Branch("RMSR", &rmsr, "RMSR/D");
-  ip.roottree->Branch("SkewR", &skewnessr, "SkewR/D");
-  ip.roottree->Branch("KurR", &kurtosisr, "KurR/D");
-  ip.roottree->Branch("ModeR", &moder, "ModeR/D");
-
-  ip.roottree->Branch("MeanB", &meang, "MeanB/D");
-  ip.roottree->Branch("RMSB", &rmsg, "RMSB/D");
-  ip.roottree->Branch("SkewB", &skewnessg, "SkewB/D");
-  ip.roottree->Branch("KurB", &kurtosisg, "KurB/D");
-  ip.roottree->Branch("ModeB", &modeg, "ModeB/D");
-
-  ip.roottree->Branch("MeanG", &meanb, "MeanG/D");
-  ip.roottree->Branch("RMSG", &rmsb, "RMSG/D");
-  ip.roottree->Branch("SkewG", &skewnessb, "SkewG/D");
-  ip.roottree->Branch("KurG", &kurtosisb, "KurG/D");
-  ip.roottree->Branch("ModeG", &modeb, "ModeG/D");
-
 
   ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
   
-  //ip.roottree->Branch("width", &width, "width/I");
-  //ip.roottree->Branch("height", &height, "height/I");
-  //int R = 0, G = 0, B = 0;
-  //int k = 0;
-  /*
-  for (int i = 0 ; i < width ; i++) {
-    for (int j = 0 ; j < height ; j++) {
-      R = JPEGSAMPLE(3*(j*width + i)    );
-      G = JPEGSAMPLE(3*(j*width + i) + 1);
-      B = JPEGSAMPLE(3*(j*width + i) + 2);
-      if ( RGB_BELOW( 3 ) ) continue;
-      if( colorsr.find(R) == colorsr.end() ){
-	colorsr[R] = 0; 
-      }
-      else{
-	colorsr[R]++;
-      }
-      if( colorsg.find(G) == colorsg.end() ){
-	colorsg[G] = 0; 
-      }
-      else{
-	colorsg[G]++;
-      }
-      if( colorsb.find(B) == colorsb.end() ){
-	colorsb[B] = 0; 
-      }
-      else{
-	colorsb[B]++;
-      }
-    }
-  }
-  */
-  /*
+  int R = 0, G = 0, B = 0;
+
   for (int i = 0 ; i < width ; i++) {
     for (int j = 0 ; j < height ; j++) {
       R = JPEGSAMPLE(3*(j*width + i)    );
@@ -250,10 +105,6 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       // Get rid of the black
       if ( RGB_BELOW( 3 ) ) continue;
       
-      //colorsr[k] = R;
-      //colorsg[k] = G;
-      //colorsb[k] = B;
-
       // Otherwise fill data
       colorR = R;
       colorG = G;
@@ -264,11 +115,8 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
 
       // Fill here one event
       ip.roottree->Fill();
-      //k++;
     }
   }
-  */
-  ip.roottree->Fill();
 }
 
 
@@ -427,8 +275,7 @@ int main(int argc, char ** argv) {
   // Number of threads to be used
   static const int num_threads = GetConcurrentThreads();
   if(debug) cout << "\t-   concurentThreads    = " << num_threads << endl;
-  //inputp.nthreads = num_threads;
-  inputp.nthreads = 1;
+  inputp.nthreads = num_threads;
   // Get info from the cvs file
   vector<pair<string, int> > csvinfo = readCSVFile(__trainLabels);
   //DumpCSVInfo(csvinfo);
