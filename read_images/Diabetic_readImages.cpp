@@ -75,27 +75,27 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   //cout << ip.rootfile << "," << ip.roottree << endl;
   
   // Variables
-  //int colorR;
-  //int colorG;
-  //int colorB;
-  //int pixx;
-  //int pixy;
+  int colorR;
+  int colorG;
+  int colorB;
+  int pixx;
+  int pixy;
   //double colorgor;
   //double colorbor;
   int width = width_i;
   int height = height_i;
   int drlevel = ip.drlevel;
   
-  std::map<int,int> colorsr;
-  std::map<int,int> colorsg;
-  std::map<int,int> colorsb;
+  //std::map<int,int> colorsr;
+  //std::map<int,int> colorsg;
+  //std::map<int,int> colorsb;
   
-  int square = 256;
-  string be,re,gr,bl;
+  //int square = 256;
+  //string be,re,gr,bl;
 
   // Branches
-  string temp;
-
+  //string temp;
+  /*
   for(int i = 0 ; i< square; i++){
     be = "H";
     std::ostringstream oss;
@@ -113,7 +113,8 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
     oss.clear();
     be = "";
   }
-  /*
+  */
+  
   ip.roottree->Branch("Red", &colorR, "Red/I");
   ip.roottree->Branch("Green", &colorG, "Green/I");
   ip.roottree->Branch("Blue", &colorB, "Blue/I");
@@ -122,13 +123,12 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   ip.roottree->Branch("PixelX", &pixx, "PixelX/I");
   ip.roottree->Branch("PixelY", &pixy, "PixelY/I");
   ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
-  */
-  ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
-  ip.roottree->Branch("width", &width, "width/I");
-  ip.roottree->Branch("height", &height, "height/I");
+  
+  //ip.roottree->Branch("width", &width, "width/I");
+  //ip.roottree->Branch("height", &height, "height/I");
   int R = 0, G = 0, B = 0;
   //int k = 0;
-
+  /*
   for (int i = 0 ; i < width ; i++) {
     for (int j = 0 ; j < height ; j++) {
       R = JPEGSAMPLE(3*(j*width + i)    );
@@ -155,8 +155,8 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       }
     }
   }
-
-  /*
+  */
+  
   for (int i = 0 ; i < width ; i++) {
     for (int j = 0 ; j < height ; j++) {
       R = JPEGSAMPLE(3*(j*width + i)    );
@@ -166,9 +166,9 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       // Get rid of the black
       if ( RGB_BELOW( 3 ) ) continue;
       
-      colorsr[k] = R;
-      colorsg[k] = G;
-      colorsb[k] = B;
+      //colorsr[k] = R;
+      //colorsg[k] = G;
+      //colorsb[k] = B;
 
       // Otherwise fill data
       colorR = R;
@@ -178,23 +178,13 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       pixx = i;
       pixy = j;
 
-
-      // ratios
-      if ( R > 0 ) {
-	colorbor = (double)B/(double)R;
-	colorgor = (double)G/(double)R;
-      } else {
-	colorbor = 0.;
-	colorgor = 0.;
-      }
-
       // Fill here one event
-      //ip.roottree->Fill();
-      k++;
+      ip.roottree->Fill();
+      //k++;
     }
   }
-  */
-  ip.roottree->Fill();
+  //*/
+  //ip.roottree->Fill();
 }
 
 
@@ -204,6 +194,7 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
 void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
 
   ///// Alberto Color Mode selection
+  /*
   std::map<int,int> colors;
   int key;
   int R = 0, B = 0, G = 0;
@@ -228,11 +219,11 @@ void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
 	  colors[key]++;
 	}
       }
-      */
+  
       //cout << "Color " <<  JPEGSAMPLE(jj*width + ii) << endl; 
     }
   }  
-
+*/
   /*
 
   std::map<int,int>::iterator it;
