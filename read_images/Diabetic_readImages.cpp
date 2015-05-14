@@ -193,17 +193,17 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   ip.roottree->Branch("KurR", &kurtosisr, "KurR/D");
   ip.roottree->Branch("ModeR", &moder, "ModeR/D");
 
-  ip.roottree->Branch("MeanB", &meanr, "MeanB/D");
-  ip.roottree->Branch("RMSB", &rmsr, "RMSB/D");
-  ip.roottree->Branch("SkewB", &skewnessr, "SkewB/D");
-  ip.roottree->Branch("KurB", &kurtosisr, "KurB/D");
-  ip.roottree->Branch("ModeB", &moder, "ModeB/D");
+  ip.roottree->Branch("MeanB", &meang, "MeanB/D");
+  ip.roottree->Branch("RMSB", &rmsg, "RMSB/D");
+  ip.roottree->Branch("SkewB", &skewnessg, "SkewB/D");
+  ip.roottree->Branch("KurB", &kurtosisg, "KurB/D");
+  ip.roottree->Branch("ModeB", &modeg, "ModeB/D");
 
-  ip.roottree->Branch("MeanG", &meanr, "MeanG/D");
-  ip.roottree->Branch("RMSG", &rmsr, "RMSG/D");
-  ip.roottree->Branch("SkewG", &skewnessr, "SkewG/D");
-  ip.roottree->Branch("KurG", &kurtosisr, "KurG/D");
-  ip.roottree->Branch("ModeG", &moder, "ModeG/D");
+  ip.roottree->Branch("MeanG", &meanb, "MeanG/D");
+  ip.roottree->Branch("RMSG", &rmsb, "RMSG/D");
+  ip.roottree->Branch("SkewG", &skewnessb, "SkewG/D");
+  ip.roottree->Branch("KurG", &kurtosisb, "KurG/D");
+  ip.roottree->Branch("ModeG", &modeb, "ModeG/D");
 
 
   ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
