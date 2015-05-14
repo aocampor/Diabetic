@@ -12,6 +12,7 @@
 #include <map>
 #include <vector>
 #include <thread>
+#include <sstream>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -85,7 +86,30 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   int height = height_i;
   int drlevel = ip.drlevel;
   
+  std::map<int,int> colors;
+  
+  int square = 100;
+  string be;
+
   // Branches
+  string temp;//,temp1;
+  //cout << "Entering the square pixel" << endl;
+  for(int i = 0 ; i< square*square; i++){
+    colors[i] = 0;
+    be = "pix";
+    std::ostringstream oss;
+    oss << i;
+    be += oss.str();
+    temp = be + "/I";
+    //    sprintf(be,"pix%d",i);
+    //temp1 = strcat(temp1, be);
+    //temp = strcat(temp1 , "/I");
+    //cout << "Pixel " << be << " being written as " << temp << endl;
+    ip.roottree->Branch(be.c_str(), &colors[i], temp.c_str());
+    oss.clear();
+    be = "";
+  }
+  /*
   ip.roottree->Branch("Red", &colorR, "Red/I");
   ip.roottree->Branch("Green", &colorG, "Green/I");
   ip.roottree->Branch("Blue", &colorB, "Blue/I");
@@ -96,8 +120,10 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
   //ip.roottree->Branch("width", &width, "width/I");
   //ip.roottree->Branch("height", &height, "height/I");
-  
+  */
+  ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
   int R = 0, G = 0, B = 0;
+  int k = 0;
   for (int i = 0 ; i < width ; i++) {
     for (int j = 0 ; j < height ; j++) {
       R = JPEGSAMPLE(3*(j*width + i)    );
@@ -107,6 +133,8 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       // Get rid of the black
       if ( RGB_BELOW( 3 ) ) continue;
       
+      colors[k] = R + 256*G + 256*256*B;
+      /*
       // Otherwise fill data
       colorR = R;
       colorG = G;
@@ -114,6 +142,7 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       
       pixx = i;
       pixy = j;
+      */
       /*
       // ratios
       if ( R > 0 ) {
@@ -125,10 +154,11 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       }
       */
       // Fill here one event
-      ip.roottree->Fill();
-      
+      //ip.roottree->Fill();
+      k++;
     }
   }
+  ip.roottree->Fill();
   
 }
 
@@ -138,6 +168,73 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
  */
 void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
 
+  
+
+  ///// Alberto Color Mode selection
+  std::map<int,int> colors;
+  int key;
+  int R = 0, B = 0, G = 0;
+  for (int ii = 0 ; ii < width ; ii++) {
+    for (int jj = 0 ; jj < height ; jj++) {
+      R = JPEGSAMPLE(3*(jj*width + ii));
+      G = JPEGSAMPLE(3*(jj*width + ii) + 1);
+      B = JPEGSAMPLE(3*(jj*width + ii) + 2);
+      if( RGB_BELOW(3) ){
+	RGB[3*(jj*width + ii)] = 255;
+	RGB[3*(jj*width + ii) + 1] = 255;
+	RGB[3*(jj*width + ii) + 2] = 255;
+      }
+      /*
+      key = R + G*256 + B*256*256;
+
+      if( ! RGB_BELOW(3) ){
+	if( colors.find(key) == colors.end() ){
+	  colors[key] = 0; 
+	}
+	else{
+	  colors[key]++;
+	}
+      }
+      */
+      //cout << "Color " <<  JPEGSAMPLE(jj*width + ii) << endl; 
+    }
+  }  
+
+  /*
+
+  std::map<int,int>::iterator it;
+  int mode = 0;
+  int keymode = 0;
+  for(it = colors.begin() ; it != colors.end() ; it++){
+    if(it->second > mode){
+      mode = it->second;
+      keymode = it->first;
+      //cout << "key " << keymode << " Mode: " << mode << endl;
+    }
+  }
+
+  for (int ii = 0 ; ii < width ; ii++) {
+    for (int jj = 0 ; jj < height ; jj++) {
+      R = JPEGSAMPLE(3*(jj*width + ii));
+      G = JPEGSAMPLE(3*(jj*width + ii) + 1);
+      B = JPEGSAMPLE(3*(jj*width + ii) + 2);
+      key = R + G*256 + B*256*256;
+      if( RGB_BELOW(3) ){
+	RGB[3*(jj*width + ii)] = 255;
+	RGB[3*(jj*width + ii) + 1] = 255;
+	RGB[3*(jj*width + ii) + 2] = 255;
+      }
+      else if(colors[key] > mode*0.9 ){
+	RGB[3*(jj*width + ii)] = 255;
+	RGB[3*(jj*width + ii) + 1] = 255;
+	RGB[3*(jj*width + ii) + 2] = 255;
+      }
+    }
+  }  
+
+  */
+
+  /* //// John Croping
   int cropSpan = 50;
   int searchSpan = 3;
   // Find the center ofthe rectangle to crop
@@ -186,6 +283,8 @@ void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
       //	cout << (unsigned int)RGB[3*(jj*width + ii)] << "," << (unsigned int)RGB[3*(jj*width + ii)+1] << "," << (unsigned int)RGB[3*(jj*width + ii)+2] << " ";
     }
   }
+
+  */
   // Write the obtained sub-image to compare visually
   string cropfn = fn;
   cropfn += ".crop.jpeg";
@@ -301,7 +400,6 @@ void ProcessImages(vector<pair<string, int> > csvinfo, input_parameters ip) {
     }
     cntr++;
   }
-
 }
 
 void ProcessOneImage(int threadId, input_parameters ip) {
@@ -319,8 +417,6 @@ void ProcessOneImage(int threadId, input_parameters ip) {
 	delete [] RGB;
 	return;
 }
-
-
 
 string LowerRes(string file, double lowrespercentage, string prefix, input_parameters ip) {
   // prepare input and output filenames
@@ -506,12 +602,12 @@ my_error_exit (j_common_ptr cinfo)
 	longjmp(myerr->setjmp_buffer, 1);
 }
 
-
-JSAMPLE *
+JSAMPLE * 
 read_JPEG_file (char * filename, int & width, int & height) {
   /* This struct contains the JPEG decompression parameters and pointers to
    * working space (which is allocated as needed by the JPEG library).
    */
+  //cout << "Height " << height << endl;
   struct jpeg_decompress_struct cinfo;
   /* We use our private extension JPEG error handler.
    * Note that this struct must live as long as the main JPEG parameter
@@ -644,7 +740,7 @@ read_JPEG_file (char * filename, int & width, int & height) {
   /* And we're done! */
   width = cinfo.image_width;
   height = cinfo.image_height;
-  
+  //cout << "Height " << height << endl;
   return RGB;
 }
 
