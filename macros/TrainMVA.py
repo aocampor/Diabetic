@@ -25,11 +25,11 @@ if __name__ == "__main__":
     factory.AddVariable("Red","F")
     factory.AddVariable("Green","F")
     factory.AddVariable("Blue","F")
-    factory.AddVariable("Hue","F")
+    #factory.AddVariable("Hue","F")
     #factory.AddVariable("Bright","F")
     #factory.AddVariable("Saturation","F")
-    factory.AddVariable("GreenOverRed","F")
-    factory.AddVariable("BlueOverRed","F")
+    #factory.AddVariable("GreenOverRed","F")
+    #factory.AddVariable("BlueOverRed","F")
     factory.AddVariable("PixelX","F")
     factory.AddVariable("PixelY","F")
 
@@ -51,8 +51,8 @@ if __name__ == "__main__":
     factory.AddBackgroundTree(chain0)
     factory.AddSignalTree(chain1)
 
-    sigCut = te.TCut("Level >= " + str(sys.argv[6]))
-    bgCut = te.TCut("Level < " + str(sys.argv[6]))
+    sigCut = te.TCut("drlevel >= " + str(sys.argv[6]))
+    bgCut = te.TCut("drlevel < " + str(sys.argv[6]))
 
     nbck = str(sys.argv[5])
     nsig = str(sys.argv[4])
