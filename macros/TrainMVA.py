@@ -22,16 +22,29 @@ if __name__ == "__main__":
                                     "AnalysisType=Classification"]
                                      ))
 
-    factory.AddVariable("Red","F")
-    factory.AddVariable("Green","F")
-    factory.AddVariable("Blue","F")
-    #factory.AddVariable("Hue","F")
-    #factory.AddVariable("Bright","F")
-    #factory.AddVariable("Saturation","F")
-    #factory.AddVariable("GreenOverRed","F")
-    #factory.AddVariable("BlueOverRed","F")
-    factory.AddVariable("PixelX","F")
-    factory.AddVariable("PixelY","F")
+
+    square = 10
+    for i in range(0, square*square):
+        varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
+        varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
+        varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
+        #print 
+        factory.AddVariable(varr,"I")
+        factory.AddVariable(varg,"I")
+        factory.AddVariable(varb,"I")
+        #factory.AddVariable('pix'+str(i),"I")
+        #factory.AddVariable('pix'+str(i),"I")
+
+    #factory.AddVariable("Red","F")
+    #factory.AddVariable("Green","F")
+    #factory.AddVariable("Blue","F")
+    ##factory.AddVariable("Hue","F")
+    ##factory.AddVariable("Bright","F")
+    ##factory.AddVariable("Saturation","F")
+    ##factory.AddVariable("GreenOverRed","F")
+    ##factory.AddVariable("BlueOverRed","F")
+    #factory.AddVariable("PixelX","F")
+    #factory.AddVariable("PixelY","F")
 
     #for i in range(0,100):
     #    factory.AddVariable("Pix"+str(i),"F")
@@ -90,7 +103,8 @@ if __name__ == "__main__":
                                     #"NeuronType=tanh",
                                     "VarTransform=N",
                                     "NCycles="+str(sys.argv[7]),
-                                    "HiddenLayers=N+"+str(sys.argv[8])+",N",
+                                    #"HiddenLayers=N+"+str(sys.argv[8])+",N",
+                                    "HiddenLayers=N",
                                     "TestRate=10",
                                     #"NTrees=850",
                                     #"nEventsMin=150",
