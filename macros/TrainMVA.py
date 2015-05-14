@@ -24,25 +24,40 @@ if __name__ == "__main__":
 
 
     square = 248
-    for i in range(0, square, 8):
-        #varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
-        #varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
-        #varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
-        
-        varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R + H' + str(i+3) + 'R + H' + str(i+4) + 'R + H' + str(i+5) + 'R + H' + str(i+6) + 'R'  
-        #varr = 'H'+str(i) + 'R'
-        #varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R'
-        varg = 'NH'+str(i) + 'G := H' + str(i) + 'G + H' + str(i + 1) + 'G + H' + str(i+2) + 'G + H' + str(i+3) + 'G + H' + str(i+4) + 'G + H' + str(i+5) + 'G + H' + str(i+6) + 'G'
-        varb = 'NH'+str(i) + 'B := H' + str(i) + 'B + H' + str(i + 1) + 'B + H' + str(i+2) + 'B + H' + str(i+3) + 'B + H' + str(i+4) + 'B + H' + str(i+5) + 'B + H' + str(i+6) + 'B'
-        #print 
-        factory.AddVariable(varr,"I")
-        factory.AddVariable(varg,"I")
-        #factory.AddVariable(varb,"I")
-        #factory.AddVariable('pix'+str(i),"I")
-        #factory.AddVariable('pix'+str(i),"I")
+    #for i in range(0, square, 8):
+    #    #varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
+    #    #varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
+    #    #varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
+    #    
+    #    varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R + H' + str(i+3) + 'R + H' + str(i+4) + 'R + H' + str(i+5) + 'R + H' + str(i+6) + 'R'  
+    #    #varr = 'H'+str(i) + 'R'
+    #    #varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R'
+    #    varg = 'NH'+str(i) + 'G := H' + str(i) + 'G + H' + str(i + 1) + 'G + H' + str(i+2) + 'G + H' + str(i+3) + 'G + H' + str(i+4) + 'G + H' + str(i+5) + 'G + H' + str(i+6) + 'G'
+    #    varb = 'NH'+str(i) + 'B := H' + str(i) + 'B + H' + str(i + 1) + 'B + H' + str(i+2) + 'B + H' + str(i+3) + 'B + H' + str(i+4) + 'B + H' + str(i+5) + 'B + H' + str(i+6) + 'B'
+    #    #print 
+    #    factory.AddVariable(varr,"I")
+    #    factory.AddVariable(varg,"I")
+    #    #factory.AddVariable(varb,"I")
+    #    #factory.AddVariable('pix'+str(i),"I")
+    #    #factory.AddVariable('pix'+str(i),"I")
 
-    factory.AddVariable('height',"I")
-    factory.AddVariable('width',"I")
+    factory.AddVariable('MeanR',"D")
+    factory.AddVariable('RMSR',"D")
+    #factory.AddVariable('SkewR',"D")
+    factory.AddVariable('KurR',"D")
+
+    factory.AddVariable('MeanG',"D")
+    factory.AddVariable('RMSG',"D")
+    #factory.AddVariable('SkewG',"D")
+    factory.AddVariable('KurG',"D")
+
+    factory.AddVariable('MeanB',"D")
+    factory.AddVariable('RMSB',"D")
+    #factory.AddVariable('SkewB',"D")
+    factory.AddVariable('KurB',"D")
+
+    #factory.AddVariable('height',"I")
+    #factory.AddVariable('width',"I")
 
     #factory.AddVariable("Red","F")
     #factory.AddVariable("Green","F")
