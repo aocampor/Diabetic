@@ -43,17 +43,17 @@ if __name__ == "__main__":
 
     factory.AddVariable('MeanR',"D")
     factory.AddVariable('RMSR',"D")
-    #factory.AddVariable('SkewR',"D")
+    factory.AddVariable('SkewR',"D")
     factory.AddVariable('KurR',"D")
 
     factory.AddVariable('MeanG',"D")
     factory.AddVariable('RMSG',"D")
-    #factory.AddVariable('SkewG',"D")
+    factory.AddVariable('SkewG',"D")
     factory.AddVariable('KurG',"D")
 
     factory.AddVariable('MeanB',"D")
     factory.AddVariable('RMSB',"D")
-    #factory.AddVariable('SkewB',"D")
+    factory.AddVariable('SkewB',"D")
     factory.AddVariable('KurB',"D")
 
     #factory.AddVariable('height',"I")
