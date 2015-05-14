@@ -86,26 +86,33 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   int height = height_i;
   int drlevel = ip.drlevel;
   
-  std::map<int,int> colors;
+  std::map<int,int> colorsr;
+  std::map<int,int> colorsg;
+  std::map<int,int> colorsb;
   
   int square = 100;
-  string be;
+  string be,re,gr,bl;
 
   // Branches
   string temp;//,temp1;
   //cout << "Entering the square pixel" << endl;
   for(int i = 0 ; i< square*square; i++){
-    colors[i] = 0;
+    colorsr[i] = 0;
+    colorsg[i] = 0;
+    colorsb[i] = 0;
     be = "pix";
     std::ostringstream oss;
     oss << i;
     be += oss.str();
-    temp = be + "/I";
-    //    sprintf(be,"pix%d",i);
-    //temp1 = strcat(temp1, be);
-    //temp = strcat(temp1 , "/I");
-    //cout << "Pixel " << be << " being written as " << temp << endl;
-    ip.roottree->Branch(be.c_str(), &colors[i], temp.c_str());
+    re = be + 'R';
+    gr = be + 'G';
+    bl = be + 'B';
+    temp = re + "/I";
+    ip.roottree->Branch(re.c_str(), &colorsr[i], temp.c_str());
+    temp = gr + "/I";
+    ip.roottree->Branch(gr.c_str(), &colorsg[i], temp.c_str());
+    temp = bl + "/I";
+    ip.roottree->Branch(bl.c_str(), &colorsb[i], temp.c_str());
     oss.clear();
     be = "";
   }
@@ -133,7 +140,9 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       // Get rid of the black
       if ( RGB_BELOW( 3 ) ) continue;
       
-      colors[k] = R + 256*G + 256*256*B;
+      colorsr[k] = R;
+      colorsg[k] = G;
+      colorsb[k] = B;
       /*
       // Otherwise fill data
       colorR = R;
@@ -159,7 +168,6 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
     }
   }
   ip.roottree->Fill();
-  
 }
 
 
@@ -167,8 +175,6 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
  *  Make a selection in the image if necessary
  */
 void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
-
-  
 
   ///// Alberto Color Mode selection
   std::map<int,int> colors;
