@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<MethodSetup Method="Fisher::BoostedFisher_B0016">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Sat May 16 19:12:50 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/home/aocampor/GIT/Diabetic/train_tree"/>
+    <Info name="Training events" value="6000"/>
+    <Info name="TrainingTime" value="2.75301933e-03"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="No">None</Option>
+    <Option name="H" modified="Yes">True</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="Method" modified="No">Fisher</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="Red" Label="Red" Title="Red" Unit="" Internal="Red" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="1" Expression="Green" Label="Green" Title="Expression 2" Unit="" Internal="Green" Type="F" Min="0.00000000e+00" Max="2.52000000e+02"/>
+    <Variable VarIndex="2" Expression="Blue" Label="Blue" Title="Variable 3" Unit="units" Internal="Blue" Type="F" Min="0.00000000e+00" Max="2.33000000e+02"/>
+    <Variable VarIndex="3" Expression="PixelX" Label="PixelX" Title="Variable 4" Unit="units" Internal="PixelX" Type="F" Min="3.60000000e+01" Max="5.48000000e+02"/>
+    <Variable VarIndex="4" Expression="PixelY" Label="PixelY" Title="Variable 5" Unit="units" Internal="PixelY" Type="F" Min="0.00000000e+00" Max="3.88000000e+02"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Signal" Index="0"/>
+    <Class Name="Background" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs/>
+  <Weights NCoeff="6">
+    <Coefficient Index="0" Value="-1.9286617331307279e-01"/>
+    <Coefficient Index="1" Value="-7.7211766158771164e-03"/>
+    <Coefficient Index="2" Value="2.2037760911679978e-02"/>
+    <Coefficient Index="3" Value="-1.5564163875308731e-02"/>
+    <Coefficient Index="4" Value="3.9045155699598329e-04"/>
+    <Coefficient Index="5" Value="-1.1877355963297123e-04"/>
+  </Weights>
+</MethodSetup>

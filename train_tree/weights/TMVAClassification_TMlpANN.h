@@ -1,0 +1,113 @@
+#ifndef TMVAClassification_TMlpANN_h
+#define TMVAClassification_TMlpANN_h
+
+class TMVAClassification_TMlpANN { 
+public:
+   TMVAClassification_TMlpANN() {}
+   ~TMVAClassification_TMlpANN() {}
+   double Value(int index,double in0,double in1,double in2,double in3,double in4);
+   double Value(int index, double* input);
+private:
+   double input0;
+   double input1;
+   double input2;
+   double input3;
+   double input4;
+   double neuron0xa462d80();
+   double neuron0xa461830();
+   double neuron0xa461b70();
+   double neuron0xa461eb0();
+   double neuron0xa4621f0();
+   double input0xa462660();
+   double neuron0xa462660();
+   double input0xa4629d0();
+   double neuron0xa4629d0();
+   double input0xa47c190();
+   double neuron0xa47c190();
+   double input0xa47c610();
+   double neuron0xa47c610();
+   double input0xa47cae0();
+   double neuron0xa47cae0();
+   double input0xa47ced0();
+   double neuron0xa47ced0();
+   double input0xa47d350();
+   double neuron0xa47d350();
+   double input0xa47d960();
+   double neuron0xa47d960();
+   double input0xa47de20();
+   double neuron0xa47de20();
+   double input0xa47e2e0();
+   double neuron0xa47e2e0();
+   double input0xa47e7a0();
+   double neuron0xa47e7a0();
+   double input0xa47ec60();
+   double neuron0xa47ec60();
+   double synapse0xa4610b0();
+   double synapse0xa461500();
+   double synapse0xa462910();
+   double synapse0xa462950();
+   double synapse0xa462990();
+   double synapse0xa47c050();
+   double synapse0xa47c090();
+   double synapse0xa47c0d0();
+   double synapse0xa47c110();
+   double synapse0xa47c150();
+   double synapse0xa47c4d0();
+   double synapse0xa47c510();
+   double synapse0xa47c550();
+   double synapse0xa47c590();
+   double synapse0xa47c5d0();
+   double synapse0xa47c950();
+   double synapse0xa47c990();
+   double synapse0xa461540();
+   double synapse0xa462b60();
+   double synapse0xa462ba0();
+   double synapse0xa47cd90();
+   double synapse0xa47cdd0();
+   double synapse0xa47ce10();
+   double synapse0xa47ce50();
+   double synapse0xa47ce90();
+   double synapse0xa47d210();
+   double synapse0xa47d250();
+   double synapse0xa47d290();
+   double synapse0xa47d2d0();
+   double synapse0xa47d310();
+   double synapse0xa47d690();
+   double synapse0xa47d6d0();
+   double synapse0xa47d710();
+   double synapse0xa47c9d0();
+   double synapse0xa47ca10();
+   double synapse0xa47ca50();
+   double synapse0xa47dca0();
+   double synapse0xa47dce0();
+   double synapse0xa47dd20();
+   double synapse0xa47dd60();
+   double synapse0xa47dda0();
+   double synapse0xa47dde0();
+   double synapse0xa47e160();
+   double synapse0xa47e1a0();
+   double synapse0xa47e1e0();
+   double synapse0xa47e220();
+   double synapse0xa47e260();
+   double synapse0xa47e2a0();
+   double synapse0xa47e620();
+   double synapse0xa47e660();
+   double synapse0xa47e6a0();
+   double synapse0xa47e6e0();
+   double synapse0xa47e720();
+   double synapse0xa47e760();
+   double synapse0xa47eae0();
+   double synapse0xa47eb20();
+   double synapse0xa47eb60();
+   double synapse0xa47eba0();
+   double synapse0xa47ebe0();
+   double synapse0xa47ec20();
+   double synapse0xa47efa0();
+   double synapse0xa47efe0();
+   double synapse0xa47f020();
+   double synapse0xa47f060();
+   double synapse0xa47f0a0();
+};
+
+#endif // TMVAClassification_TMlpANN_h
+

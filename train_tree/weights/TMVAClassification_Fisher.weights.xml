@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<MethodSetup Method="Fisher::Fisher">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Sat May 16 19:12:49 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/home/aocampor/GIT/Diabetic/train_tree"/>
+    <Info name="Training events" value="6000"/>
+    <Info name="TrainingTime" value="3.16381454e-03"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="Yes">None</Option>
+    <Option name="H" modified="Yes">True</Option>
+    <Option name="CreateMVAPdfs" modified="Yes">True</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="Method" modified="Yes">Fisher</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="Red" Label="Red" Title="Red" Unit="" Internal="Red" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="1" Expression="Green" Label="Green" Title="Expression 2" Unit="" Internal="Green" Type="F" Min="0.00000000e+00" Max="2.52000000e+02"/>
+    <Variable VarIndex="2" Expression="Blue" Label="Blue" Title="Variable 3" Unit="units" Internal="Blue" Type="F" Min="0.00000000e+00" Max="2.33000000e+02"/>
+    <Variable VarIndex="3" Expression="PixelX" Label="PixelX" Title="Variable 4" Unit="units" Internal="PixelX" Type="F" Min="3.60000000e+01" Max="5.48000000e+02"/>
+    <Variable VarIndex="4" Expression="PixelY" Label="PixelY" Title="Variable 5" Unit="units" Internal="PixelY" Type="F" Min="0.00000000e+00" Max="3.88000000e+02"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Signal" Index="0"/>
+    <Class Name="Background" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs>
+    <PDF Name="Fisher_PDFSig" MinNSmooth="10" MaxNSmooth="10" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+      <Histogram Name="Fisher_tr_S_original" NBins="50" XMin="-3.8507657051086426e+00" XMax="2.7307105064392090e+00" HasEquidistantBins="1">
+        0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 2.53320434e-02 6.07969041e-02 3.54648607e-02 1.39326238e-01 2.48254025e-01 3.39449381e-01 6.13035449e-01 7.92892957e-01 8.48623452e-01 9.44885217e-01 9.22086378e-01 8.43557044e-01 6.96631192e-01 5.85170202e-01 2.98918112e-01 1.01328173e-01 2.27988390e-02 1.01328173e-02 1.01328173e-02 7.59961301e-03 1.01328173e-02 1.01328173e-02 1.77324304e-02 7.59961301e-03 2.53320434e-03 2.53320434e-03 0.00000000e+00 
+      </Histogram>
+    </PDF>
+    <PDF Name="Fisher_PDFBkg" MinNSmooth="10" MaxNSmooth="10" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+      <Histogram Name="Fisher_tr_B_original" NBins="50" XMin="-3.8507657051086426e+00" XMax="2.7307105064392090e+00" HasEquidistantBins="1">
+        5.06471987e-03 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 2.53235993e-03 0.00000000e+00 0.00000000e+00 0.00000000e+00 2.53235993e-03 2.53235993e-03 2.53235993e-03 1.26617997e-02 3.03883192e-02 3.03883192e-02 3.54530391e-02 7.34384381e-02 1.08891477e-01 2.30444754e-01 4.43162989e-01 7.92628659e-01 7.92628659e-01 8.71131817e-01 8.83793617e-01 9.36973176e-01 6.53348863e-01 4.40630629e-01 2.58300713e-01 1.94991715e-01 1.62071036e-01 1.64603396e-01 1.19020917e-01 1.19020917e-01 7.85031580e-02 6.58413583e-02 3.54530391e-02 2.53235993e-02 1.01294397e-02 1.26617997e-02 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 
+      </Histogram>
+    </PDF>
+  </MVAPdfs>
+  <Weights NCoeff="6">
+    <Coefficient Index="0" Value="-4.3222547806709294e-01"/>
+    <Coefficient Index="1" Value="-2.5106483400407109e-02"/>
+    <Coefficient Index="2" Value="7.6994497478630644e-02"/>
+    <Coefficient Index="3" Value="-5.4353206248324896e-02"/>
+    <Coefficient Index="4" Value="3.9528913600974392e-05"/>
+    <Coefficient Index="5" Value="-4.0711826647483172e-04"/>
+  </Weights>
+</MethodSetup>

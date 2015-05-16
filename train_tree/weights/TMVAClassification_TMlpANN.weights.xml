@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<MethodSetup Method="TMlpANN::TMlpANN">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Sat May 16 19:25:35 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/home/aocampor/GIT/Diabetic/train_tree"/>
+    <Info name="Training events" value="6000"/>
+    <Info name="TrainingTime" value="8.68925309e+00"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="No">None</Option>
+    <Option name="H" modified="Yes">False</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="NCycles" modified="Yes">200</Option>
+    <Option name="HiddenLayers" modified="Yes">N+1,N</Option>
+    <Option name="ValidationFraction" modified="Yes">3.000000e-01</Option>
+    <Option name="LearningMethod" modified="Yes">bfgs</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="Red" Label="Red" Title="Red" Unit="" Internal="Red" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="1" Expression="Green" Label="Green" Title="Expression 2" Unit="" Internal="Green" Type="F" Min="0.00000000e+00" Max="2.52000000e+02"/>
+    <Variable VarIndex="2" Expression="Blue" Label="Blue" Title="Variable 3" Unit="units" Internal="Blue" Type="F" Min="0.00000000e+00" Max="2.33000000e+02"/>
+    <Variable VarIndex="3" Expression="PixelX" Label="PixelX" Title="Variable 4" Unit="units" Internal="PixelX" Type="F" Min="3.60000000e+01" Max="5.48000000e+02"/>
+    <Variable VarIndex="4" Expression="PixelY" Label="PixelY" Title="Variable 5" Unit="units" Internal="PixelY" Type="F" Min="0.00000000e+00" Max="3.88000000e+02"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Signal" Index="0"/>
+    <Class Name="Background" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs/>
+  <Weights>
+    <Architecture BuildOptions="@Red,@Green,@Blue,@PixelX,@PixelY:6:5:type"/>
+    <input>
+      36.8406 123.792 30.6937 88.124 27.39 58.5247 111.769 276.627 94.2369 183.72 
+    </input>
+    <output>
+      1 0 
+    </output>
+    <neurons>
+      0.0623279 -0.161981 -0.257251 0.00995974 -0.470513 -1.8413 -5.72686 8.22888 -0.571601 -1.47948 2.90338 -3.49889 -0.483514 1.42333 -0.147373 -1.01037 -0.798652 
+    </neurons>
+    <synapses>
+      -0.764512 -4.90753 2.56781 1.44331 1.30791 -0.542087 1.89581 -0.570966 -1.77389 -3.11212 -0.694921 -0.043236 -0.99041 3.47429 -5.0882 4.16958 -7.32298 3.59856 1.83918 -0.31246 3.6168 3.24916 -0.48854 -3.25794 0.505571 -3.66732 4.61292 -1.74093 3.4683 0.638577 -4.48899 -5.75545 6.30723 -9.45998 -3.49444 6.48244 -0.332547 -0.737714 -0.017014 -1.03417 -1.21115 -0.6346 -1.94548 -0.736077 1.52732 -3.52298 -0.160787 2.45791 0.654663 0.723104 -0.774799 2.00599 0.784519 0.0833259 -1.03655 -0.281108 0.121569 -1.42313 -1.10225 1.82763 1.42526 1.33906 0.141523 0.866202 -0.763246 
+    </synapses>
+  </Weights>
+</MethodSetup>
