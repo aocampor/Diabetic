@@ -4,7 +4,7 @@ import array as array
 import ROOT
 
 if __name__ == "__main__":
-    outrootfile = TFile('/home/aocampor/DiabeticRetinophaty/Output/OutputClassification.root')
+    outrootfile = TFile('OutputClassification.root')
     keys = outrootfile.GetListOfKeys()
     txtout = open('firstatempt.csv','w')
     txtout.write('image,level\n')
@@ -15,7 +15,7 @@ if __name__ == "__main__":
         #c1 = TCanvas()
         histo = outrootfile.Get(name)
         mean = histo.GetMean()
-        if(mean > 0.54):
+        if(mean > 0.5):
             txtout.write(name + ',' + str(1) + '\n')
         else: 
             txtout.write(name + ',' + str(0)+'\n')

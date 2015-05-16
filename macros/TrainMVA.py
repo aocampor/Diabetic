@@ -22,61 +22,12 @@ if __name__ == "__main__":
                                     "AnalysisType=Classification"]
                                      ))
 
-
-    square = 248
-    #for i in range(0, square, 8):
-    #    #varr = 'var'+str(i)+'R := ('+'pix'+str(i) + ' & 0xff0000) >> 16'
-    #    #varg = 'var'+str(i)+'G := ('+'pix'+str(i) + ' & 0x00ff00) >> 8'
-    #    #varb = 'var'+str(i)+'B := ('+'pix'+str(i) + ' & 0x0000ff) '
-    #    
-    #    varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R + H' + str(i+3) + 'R + H' + str(i+4) + 'R + H' + str(i+5) + 'R + H' + str(i+6) + 'R'  
-    #    #varr = 'H'+str(i) + 'R'
-    #    #varr = 'NH'+str(i) + 'R := H' + str(i) + 'R + H' + str(i + 1) + 'R + H' + str(i+2) + 'R'
-    #    varg = 'NH'+str(i) + 'G := H' + str(i) + 'G + H' + str(i + 1) + 'G + H' + str(i+2) + 'G + H' + str(i+3) + 'G + H' + str(i+4) + 'G + H' + str(i+5) + 'G + H' + str(i+6) + 'G'
-    #    varb = 'NH'+str(i) + 'B := H' + str(i) + 'B + H' + str(i + 1) + 'B + H' + str(i+2) + 'B + H' + str(i+3) + 'B + H' + str(i+4) + 'B + H' + str(i+5) + 'B + H' + str(i+6) + 'B'
-    #    #print 
-    #    factory.AddVariable(varr,"I")
-    #    factory.AddVariable(varg,"I")
-    #    #factory.AddVariable(varb,"I")
-    #    #factory.AddVariable('pix'+str(i),"I")
-    #    #factory.AddVariable('pix'+str(i),"I")
-
-    factory.AddVariable('MeanR',"D")
-    factory.AddVariable('RMSR',"D")
-    factory.AddVariable('SkewR',"D")
-    factory.AddVariable('KurR',"D")
-
-    factory.AddVariable('MeanG',"D")
-    factory.AddVariable('RMSG',"D")
-    factory.AddVariable('SkewG',"D")
-    factory.AddVariable('KurG',"D")
-
-    factory.AddVariable('MeanB',"D")
-    factory.AddVariable('RMSB',"D")
-    factory.AddVariable('SkewB',"D")
-    factory.AddVariable('KurB',"D")
-
-    #factory.AddVariable('height',"I")
-    #factory.AddVariable('width',"I")
-
-    #factory.AddVariable("Red","F")
-    #factory.AddVariable("Green","F")
-    #factory.AddVariable("Blue","F")
-    ##factory.AddVariable("Hue","F")
-    ##factory.AddVariable("Bright","F")
-    ##factory.AddVariable("Saturation","F")
-    ##factory.AddVariable("GreenOverRed","F")
-    ##factory.AddVariable("BlueOverRed","F")
+    factory.AddVariable("Red","F")
+    factory.AddVariable("Green","F")
+    factory.AddVariable("Blue","F")
     #factory.AddVariable("PixelX","F")
-    #factory.AddVariable("PixelY","F")
+    factory.AddVariable("PixelY","F")
 
-    #for i in range(0,100):
-    #    factory.AddVariable("Pix"+str(i),"F")
-
-    #files = ['background.root','signal.root']
-
-    #f1 = TFile(folder + files[0])
-    #f2 = TFile(folder + files[1])
     nameback = sys.argv[2]
     namesig = sys.argv[3]
     f1 = TFile(nameback)
@@ -106,16 +57,7 @@ if __name__ == "__main__":
     inpfortraining.append('NormMode=NumEvents')
     inpfortraining.append('!V')
         
-    #factory.PrepareTrainingAndTestTree(sigCut,   # signal events
-    #                                   bgCut,    # background events
-    #                                   ":".join([
-    #                                       "nTrain_Signal=" + str(sys.argv[4]),
-    #                                       "nTrain_Background="+str(sys.argv[5]),
-    #                                       "SplitMode=Random",
-    #                                       "NormMode=NumEvents",
-    #                                       "!V"
-    #                                   ]))
-    
+   
     factory.PrepareTrainingAndTestTree(sigCut,   # signal events
                                        bgCut,    # background events
                                        ":".join( inpfortraining ) )    
@@ -127,7 +69,7 @@ if __name__ == "__main__":
                                     #"NeuronType=tanh",
                                     "VarTransform=N",
                                     "NCycles="+str(sys.argv[7]),
-                                    "HiddenLayers=N+"+str(sys.argv[8]),
+                                    #"HiddenLayers=N+"+str(sys.argv[8]),
                                     "TestRate=10",
                                     #"NTrees=850",
                                     #"nEventsMin=150",
