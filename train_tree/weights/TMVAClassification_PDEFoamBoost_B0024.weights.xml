@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<MethodSetup Method="PDEFoam::PDEFoamBoost_B0024">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.0 [262656]"/>
+    <Info name="ROOT Release" value="6.02/08 [393736]"/>
+    <Info name="Creator" value="aocampor"/>
+    <Info name="Date" value="Sat May 16 19:12:47 2015"/>
+    <Info name="Host" value="Linux DaMachine 3.16.0-34-generic #45-Ubuntu SMP Mon Mar 23 17:21:27 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/home/aocampor/GIT/Diabetic/train_tree"/>
+    <Info name="Training events" value="6000"/>
+    <Info name="TrainingTime" value="1.66289806e-02"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="No">None</Option>
+    <Option name="H" modified="Yes">False</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="SigBgSeparate" modified="Yes">False</Option>
+    <Option name="TailCut" modified="Yes">0.000000e+00</Option>
+    <Option name="VolFrac" modified="No">6.666667e-02</Option>
+    <Option name="nActiveCells" modified="Yes">500</Option>
+    <Option name="nSampl" modified="No">2000</Option>
+    <Option name="nBin" modified="Yes">20</Option>
+    <Option name="Compress" modified="Yes">True</Option>
+    <Option name="MultiTargetRegression" modified="No">False</Option>
+    <Option name="Nmin" modified="Yes">400</Option>
+    <Option name="MaxDepth" modified="Yes">4</Option>
+    <Option name="FillFoamWithOrigWeights" modified="Yes">False</Option>
+    <Option name="UseYesNoCell" modified="Yes">True</Option>
+    <Option name="DTLogic" modified="Yes">MisClassificationError</Option>
+    <Option name="Kernel" modified="Yes">None</Option>
+    <Option name="TargetSelection" modified="No">Mean</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="Red" Label="Red" Title="Red" Unit="" Internal="Red" Type="F" Min="0.00000000e+00" Max="2.55000000e+02"/>
+    <Variable VarIndex="1" Expression="Green" Label="Green" Title="Expression 2" Unit="" Internal="Green" Type="F" Min="0.00000000e+00" Max="2.52000000e+02"/>
+    <Variable VarIndex="2" Expression="Blue" Label="Blue" Title="Variable 3" Unit="units" Internal="Blue" Type="F" Min="0.00000000e+00" Max="2.33000000e+02"/>
+    <Variable VarIndex="3" Expression="PixelX" Label="PixelX" Title="Variable 4" Unit="units" Internal="PixelX" Type="F" Min="3.60000000e+01" Max="5.48000000e+02"/>
+    <Variable VarIndex="4" Expression="PixelY" Label="PixelY" Title="Variable 5" Unit="units" Internal="PixelY" Type="F" Min="0.00000000e+00" Max="3.88000000e+02"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Classes NClass="2">
+    <Class Name="Signal" Index="0"/>
+    <Class Name="Background" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs/>
+  <Weights SigBgSeparated="0" Frac="0.0000000000000000e+00" DiscrErrCut="-1.0000000000000000e+00" VolFrac="6.6666670143604279e-02" nCells="999" nSampl="2000" nBin="20" EvPerBin="10000" Compress="1" DoRegression="0" CutNmin="1" Nmin="400" CutRMSmin="0" RMSmin="0.0000000000000000e+00" Kernel="0" TargetSelection="0" FillFoamWithOrigWeights="0" UseYesNoCell="1">
+    <Xmin Index="0" Value="0.0000000000000000e+00"/>
+    <Xmin Index="1" Value="0.0000000000000000e+00"/>
+    <Xmin Index="2" Value="0.0000000000000000e+00"/>
+    <Xmin Index="3" Value="3.6000000000000000e+01"/>
+    <Xmin Index="4" Value="0.0000000000000000e+00"/>
+    <Xmax Index="0" Value="2.5500000000000000e+02"/>
+    <Xmax Index="1" Value="2.5200000000000000e+02"/>
+    <Xmax Index="2" Value="2.3300000000000000e+02"/>
+    <Xmax Index="3" Value="5.4800000000000000e+02"/>
+    <Xmax Index="4" Value="3.8800000000000000e+02"/>
+  </Weights>
+</MethodSetup>
