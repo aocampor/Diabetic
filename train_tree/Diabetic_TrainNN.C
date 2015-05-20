@@ -162,8 +162,8 @@ void Diabetic_TrainNN( TString myMethodList = "" )
   //factory->AddVariable( "(Blue+Red)/Red", 'F' );
   factory->AddVariable( "(Blue+Green)/Red", 'F' );
   factory->AddVariable( "(Blue-Green)/Red", 'F' );
-  factory->AddVariable( "PixelX",  'F' );
-  factory->AddVariable( "PixelY", 'F' );
+  //  factory->AddVariable( "PixelX",  'F' );
+  //  factory->AddVariable( "PixelY", 'F' );
 
   //factory->AddVariable( "var4",                "Variable 4", "units", 'F' );
   

@@ -1,5 +1,5 @@
 from array import array
-import os
+import os, sys
 
 def GetDic(labels):
     dic = {}
@@ -14,7 +14,7 @@ def GetDic(labels):
 if __name__ == "__main__":
 
     labelfile = '/home/aocampor/DiabeticRetinophaty/trainLabels.csv'
-    labelfile1 = '/home/aocampor/DiabeticRetinophaty/macros/firstatempt.csv'
+    labelfile1 = str(sys.argv[1])
     dic0 = GetDic(labelfile)
     dic1 = GetDic(labelfile1)
 

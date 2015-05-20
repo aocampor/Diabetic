@@ -28,25 +28,41 @@
 #include "TTree.h"
 #include "TH1D.h"
 #include "TString.h"
+#include "TMVA/Tools.h"
+#include "TMVA/Reader.h"
+
 #pragma link C++ class vector<std::string>;
 
 using namespace std;
 
-#define __trainLabels 		"/home/aocampor/DiabeticRetinophaty/trainLabels.csv"
+//#define __trainLabels 		"/home/aocampor/DiabeticRetinophaty/trainLabels.csv"
+#define __trainLabels 		"/media/aocampor/MyDisk/DiabeticRetinophaty/test/labels.txt"
 #define __lenghtprintcsv 10
-#define __lowres_percentage 15
+#define __lowres_percentage 10
 #define debug false
 
 
 typedef struct {
   string data_dir;
   string output_dir;
+  string bolean;
   int nthreads;
   string fnbit;
   int drlevel;
   TFile * rootfile;
   TTree * roottree;
 } input_parameters;
+
+TMVA::Reader *reader;
+
+const  string weightfile1 = "MLP_01.xml";
+const  string weightfile2 = "MLP_02.xml";
+const  string weightfile3 = "MLP_03.xml";
+const  string weightfile4 = "MLP_04.xml";
+
+float red, gre, blu, gbor, bpgor, bmgor;
+
+ofstream output_file;
 
 // prototypes
 vector<pair<string, int> > readCSVFile(string fn);
@@ -66,6 +82,100 @@ GLOBAL(void) write_JPEG_file (char * filename, int quality, JSAMPLE * image_buff
 #define JPEGSAMPLE(i) (unsigned int)RGB[i]
 #define RGB_BELOW(x) ( R <= x && G <= x && B <= x )
 
+void ClassifyImage(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip, int threadId) {
+
+
+  int R = 0, G = 0, B = 0;
+  
+  float bdt1, bdt2, bdt3, bdt4;
+
+  string temp1 = "";
+  temp1 += weightfile1;
+  temp1 += "_";
+  temp1 += std::to_string(threadId);
+
+  string temp2 = "";
+  temp2 += weightfile2;
+  temp2 += "_";
+  temp2 += std::to_string(threadId);
+
+  string temp3 = "";
+  temp3 += weightfile3;
+  temp3 += "_";
+  temp3 += std::to_string(threadId);
+
+  string temp4 = "";
+  temp4 += weightfile4;
+  temp4 += "_";
+  temp4 += std::to_string(threadId);
+
+
+  TH1D* histo01 = new TH1D(temp1.c_str(),"",200,-1,2);
+  TH1D* histo02 = new TH1D(temp2.c_str(),"",200,-1,2);
+  TH1D* histo03 = new TH1D(temp3.c_str(),"",200,-1,2);
+  TH1D* histo04 = new TH1D(temp4.c_str(),"",200,-1,2);
+  
+  for (int i = 0 ; i < width_i ; i++) {
+    for (int j = 0 ; j < height_i ; j++) {
+      R = JPEGSAMPLE(3*(j*width_i + i)    );
+      G = JPEGSAMPLE(3*(j*width_i + i) + 1);
+      B = JPEGSAMPLE(3*(j*width_i + i) + 2);
+      
+      // Get rid of the black
+      if ( RGB_BELOW( 3 ) ) continue;
+      red = (float)R;
+      gre = (float)G;
+      blu = (float)B;
+      if(red != 0){
+	gbor = gre*blu/red;
+	bpgor = (gre+blu)/red;
+	bmgor = (blu-gre)/red;
+      }
+      else{
+	gbor = gre*blu;
+	bpgor = (gre+blu);
+	bmgor = (blu-gre);
+      }
+	
+      bdt1 = reader->EvaluateMVA("MLP1");      
+      bdt2 = reader->EvaluateMVA("MLP2");      
+      bdt3 = reader->EvaluateMVA("MLP3");      
+      bdt4 = reader->EvaluateMVA("MLP4");      
+
+      histo01->Fill(bdt1);
+      histo02->Fill(bdt2);
+      histo03->Fill(bdt3);
+      histo04->Fill(bdt4);
+
+    }
+  }
+
+  float mean01, mean02, mean03, mean04;
+
+  mean01 = histo01->GetMean();
+  mean02 = histo02->GetMean();
+  mean03 = histo03->GetMean();
+  mean04 = histo04->GetMean();
+
+  //cout << "Name: " << ip.fnbit << endl;
+  //cout << "Mean 01: " << mean01 << endl;
+  //cout << "Mean 02: " << mean02 << endl;
+  //cout << "Mean 03: " << mean03 << endl;
+  //cout << "Mean 04: " << mean04 << endl;
+  
+  if( mean01 < 0.5 || mean02 < 0.5 || mean03 < 0.5 || mean04 < 0.5 )
+    output_file << ip.fnbit << ",0" << endl;
+  else if( mean01 > 0.6 )
+    output_file << ip.fnbit << ",1" << endl;
+  else if( mean02 > 0.6 )
+    output_file << ip.fnbit << ",2" << endl;
+  else if( mean03 > 0.6 )
+    output_file << ip.fnbit << ",3" << endl;
+  else if( mean04 > 0.6 )
+    output_file << ip.fnbit << ",4" << endl;
+
+}
+
 
 /*******************************************************************
  * Build the ntuple per image
@@ -79,8 +189,37 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   int colorR;
   int colorG;
   int colorB;
+
+  float gbor;
+  float bpgor;
+  float bmgor;
+
   int pixx;
   int pixy;
+
+  float bdt;
+
+  TMVA::Reader *reader = new TMVA::Reader("V");
+
+  string weightfile = "MLP_01.xml";
+
+  float red;
+  float gre;
+  float blu;
+  //float px;
+  //float py;
+
+
+  reader->AddVariable( "Red", &red );
+  reader->AddVariable( "Green", &gre );
+  reader->AddVariable( "Blue", &blu );
+  reader->AddVariable( "Green*Blue/Red", &gbor );
+  reader->AddVariable( "(Blue+Green)/Red", &bpgor );
+  reader->AddVariable( "(Blue-Green)/Red", &bmgor );
+  //reader->AddVariable( "PixelX", &px );
+  //reader->AddVariable( "PixelY", &py );
+
+  reader->BookMVA("MLP",weightfile.c_str());
 
   int width = width_i;
   int height = height_i;
@@ -89,9 +228,9 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
   ip.roottree->Branch("Red", &colorR, "Red/I");
   ip.roottree->Branch("Green", &colorG, "Green/I");
   ip.roottree->Branch("Blue", &colorB, "Blue/I");
+  ip.roottree->Branch("MLP", &bdt, "MLP/F");
   ip.roottree->Branch("PixelX", &pixx, "PixelX/I");
   ip.roottree->Branch("PixelY", &pixy, "PixelY/I");
-
   ip.roottree->Branch("drlevel", &drlevel, "drlevel/I");
   
   int R = 0, G = 0, B = 0;
@@ -109,7 +248,24 @@ void BuildNtuple(JSAMPLE * RGB, int width_i, int height_i, input_parameters ip) 
       colorR = R;
       colorG = G;
       colorB = B;
-      
+      red = (float)R;
+      gre = (float)G;
+      blu = (float)B;
+      if(red != 0){
+	gbor = gre*blu/red;
+	bpgor = (gre+blu)/red;
+	bmgor = (blu-gre)/red;
+      }
+      else{
+	gbor = gre*blu;
+	bpgor = (gre+blu);
+	bmgor = (blu-gre);
+      }
+	
+      //px = (float)i;
+      //py = (float)j;
+      bdt = reader->EvaluateMVA("MLP");      
+      //cout << "Reader " << bdt << endl;
       pixx = i;
       pixy = j;
 
@@ -190,7 +346,7 @@ void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
 
   */
 
-  /* //// John Croping
+   //// John Croping
   int cropSpan = 50;
   int searchSpan = 3;
   // Find the center ofthe rectangle to crop
@@ -226,7 +382,7 @@ void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
   int y0 = maxj - cropSpan;
   int x1 = maxi + cropSpan;
   int y1 = maxj + cropSpan;
-  if(debug) cout << "[INFO] Crop : " << x0 << "," << y0 << " --> " << x1 << "," << y1 << endl;
+  //if(debug) cout << "[INFO] Crop : " << x0 << "," << y0 << " --> " << x1 << "," << y1 << endl;
   // // Erase what is not in the selection
   for (int ii = 0 ; ii < width ; ii++) {
     for (int jj = 0 ; jj < height ; jj++) {
@@ -240,7 +396,7 @@ void InImageSelection(string fn, JSAMPLE * RGB, int width, int height) {
     }
   }
 
-  */
+  
   // Write the obtained sub-image to compare visually
   string cropfn = fn;
   cropfn += ".crop.jpeg";
@@ -275,13 +431,13 @@ int main(int argc, char ** argv) {
   // Number of threads to be used
   static const int num_threads = GetConcurrentThreads();
   if(debug) cout << "\t-   concurentThreads    = " << num_threads << endl;
-  inputp.nthreads = num_threads;
+  inputp.nthreads = 1;//num_threads;
   // Get info from the cvs file
   vector<pair<string, int> > csvinfo = readCSVFile(__trainLabels);
   //DumpCSVInfo(csvinfo);
   
   // Process images
-  ProcessImages( csvinfo, inputp );
+  ProcessImages( csvinfo, inputp);
   
   if(debug) cout << "[INFO] done." << endl;
   
@@ -299,6 +455,25 @@ void ProcessImages(vector<pair<string, int> > csvinfo, input_parameters ip) {
   map<int, TTree*> treeMap; // to be written and closed at the end
   map<int, TFile*> fileMap; // to be written and closed at the end
   
+  //output with label
+  output_file.open("outputLabels_firstattempt_v2.txt",  ios::out | ios::app);
+  //output_file.open("outputLabels_v2.txt",  ios::out | ios::app);
+
+  //Initialazing reader
+  reader = new TMVA::Reader("V");
+
+  reader->AddVariable( "Red", &red );
+  reader->AddVariable( "Green", &gre );
+  reader->AddVariable( "Blue", &blu );
+  reader->AddVariable( "Green*Blue/Red", &gbor );
+  reader->AddVariable( "(Blue+Green)/Red", &bpgor );
+  reader->AddVariable( "(Blue-Green)/Red", &bmgor );
+
+  reader->BookMVA("MLP1",weightfile1.c_str());
+  reader->BookMVA("MLP2",weightfile2.c_str());
+  reader->BookMVA("MLP3",weightfile3.c_str());
+  reader->BookMVA("MLP4",weightfile4.c_str());
+
   int cntr = 0;
   for( ; i != iE ; i++) {
     // set the filename indication from csv info
@@ -355,22 +530,50 @@ void ProcessImages(vector<pair<string, int> > csvinfo, input_parameters ip) {
     }
     cntr++;
   }
+  output_file.close();
 }
 
 void ProcessOneImage(int threadId, input_parameters ip) {
-	// Lower resolution
-	string lowresfn = LowerRes( ip.fnbit, __lowres_percentage, "Lowres_", ip);
-	// Read the lowres image
-	int width = 0;
-	int height = 0;
-	JSAMPLE * RGB = read_JPEG_file( (char *) lowresfn.c_str(), width, height);
-	// Select part of the image
-	//InImageSelection(lowresfn, RGB, width, height);
-	// ROOT stuff
-	BuildNtuple(RGB, width, height, ip);
-	// free memory
-	delete [] RGB;
-	return;
+  // prepare input and output filenames
+  string infn = ip.data_dir;
+  infn += '/' + ip.fnbit;
+  infn += ".jpeg";
+  
+  // the new filename
+  string outfn = ip.output_dir;
+  outfn += '/';
+  outfn += "Lowres_";
+  outfn += ip.fnbit;
+  outfn += ".jpeg";
+  
+  // See if the lower resolution file doesn't exist already
+  struct stat buffer;
+  if(debug) cout << "[INFO] file : " << outfn << " Checking if it exists." << endl;
+  if ( stat(outfn.c_str(), &buffer) == 0 ) {
+    if(debug) cout << "[INFO] file : " << outfn << " already exists. Skip convert step." << endl;
+    return;
+  }
+  
+  // Lower resolution
+  string lowresfn = LowerRes( ip.fnbit, __lowres_percentage, "Lowres_", ip);
+  // Read the lowres image
+  int width = 0;
+  int height = 0;
+  JSAMPLE * RGB = read_JPEG_file( (char *) lowresfn.c_str(), width, height);
+  // Select part of the image
+  //InImageSelection(lowresfn, RGB, width, height);
+  bool ntuple = false;
+  string temp = "true";
+  if(strcmp(ip.bolean.c_str(),temp.c_str()) == 0)
+    ntuple = true;
+  if(ntuple)	// ROOT stuff
+    BuildNtuple(RGB, width, height, ip);
+  else	//Classify the image
+    ClassifyImage(RGB, width, height, ip, threadId);
+  
+  // free memory
+  delete [] RGB;
+  return;
 }
 
 string LowerRes(string file, double lowrespercentage, string prefix, input_parameters ip) {
@@ -386,11 +589,11 @@ string LowerRes(string file, double lowrespercentage, string prefix, input_param
   outfn += ".jpeg";
   
   // See if the lower resolution file doesn't exist already
-  struct stat buffer;
-  if ( stat(outfn.c_str(), &buffer) == 0 ) {
-    if(debug) cout << "[INFO] file : " << outfn << " already exists. Skip convert step." << endl;
-    return outfn;
-  }
+  //struct stat buffer;
+  //if ( stat(outfn.c_str(), &buffer) == 0 ) {
+  //  if(debug) cout << "[INFO] file : " << outfn << " already exists. Skip convert step." << endl;
+  //  return outfn;
+  //}
   
   // prepare command
   TString command = "/bin/bash -c \"convert  -resize ";
@@ -411,7 +614,7 @@ string LowerRes(string file, double lowrespercentage, string prefix, input_param
 }
 
 input_parameters InputParameters(int argc, char ** argv){
-  if(argc < 3) {
+  if(argc < 4) {
     cout << "use: " << argv[0] << "  data(string)  converted_data(string)" << endl;
     cout << "   data:           Directory (full path) where original data can be found." << endl;
     cout << "   converted_data: Directory (full path) where processed data will be written." << endl;
@@ -420,6 +623,7 @@ input_parameters InputParameters(int argc, char ** argv){
   input_parameters ip;
   ip.data_dir = argv[1];
   ip.output_dir = argv[2];
+  ip.bolean = argv[3];
   return ip;
 }
 
@@ -662,7 +866,7 @@ read_JPEG_file (char * filename, int & width, int & height) {
     // I'll put this stuff in an array R,G,B
     for ( int i = 0 ; i < row_stride ; i++) {
       RGB[gcntr] = buffer[0][i];
-      if(debug) cout << (unsigned int)buffer[0][i] << "," << (unsigned int)buffer[0][i+1] << "," << (unsigned int)buffer[0][i+2] << "  " ;
+      //if(debug) cout << (unsigned int)buffer[0][i] << "," << (unsigned int)buffer[0][i+1] << "," << (unsigned int)buffer[0][i+2] << "  " ;
       gcntr++;
     }
     
